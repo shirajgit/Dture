@@ -42,8 +42,8 @@ const FeedDebate = () => {
               className="object-cover h-40 w-full rounded-t-2xl"
             />
           )}
-          <div className="p-3">
-            <h2 className="text-2xl font-semibold">{debate.name}</h2>
+          <div className="p-3 object-cover">
+            <h2 className="text-2xl font-semibold object-cover">{debate.name}</h2>
             <p className="text-gray-400 mt-2 line-clamp-3">
               {debate.description}
             </p>

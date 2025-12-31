@@ -4,7 +4,7 @@ import { DebateContext } from "../DebatesContext";
 import { BiLogOut } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
-const Profile = () => {
+const Profile = () => {  
 
    const { debates } = useContext(DebateContext); // get debates array
 
@@ -13,7 +13,7 @@ const Profile = () => {
      <Link to='/sign-up' > <button className=" text-white bold no-underline flex flex-row rounded-5 p-2  ">    <BiLogOut className="m-1"  size={20}/>Sign Out</button></Link>
   </div>
     <div className="text-white p-4 rounded-2xl space-y-5" >
-        
+         
         <div className=" rounded-2xl object-cover   "  > 
             <div className="   h-71 bg-gray-900 rounded-2xl p-10  flex flex-row mb-10 shadow-[0_0_25px_4px_rgba(134,239,172,0.4)]  
                          transition-all duration-300 transform  ">

@@ -1,104 +1,182 @@
- 
-import { useState } from 'react';
-import { CgProfile } from 'react-icons/cg' 
-import { FaPlus } from 'react-icons/fa';
+import { SetStateAction, useState } from 'react';
+import { CgProfile } from 'react-icons/cg';
+import { FaPlus, FaBars, FaTimes } from 'react-icons/fa';
 import { IoNotificationsSharp } from 'react-icons/io5';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
- const Navbar = () => {
-    const [actives, setActive] = useState("/");
+const Navbar = () => {
+  const [actives, setActives] = useState("/");
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("/");
 
-  const handleActive = (path :string) => {
-    setActive(path);
+
+  const handleActive = (path: SetStateAction<string>) => {
+    setActives(path);
+    setOpen(false);
+    setActive(path)
   };
-  
-   return (<> 
-     <div className="fixed top-0 z-50 w-100 flex items-center gap-[240px] mr-[110px] 
-    font-medium text-[1.2rem] text-gray-300   bg-opacity-35 backdrop-blur-sm border-b border-gray-800   mb-10" > 
-         <Link
-          to="/"     onClick={() => handleActive("/")} > <img src="/logo.png" alt="" className="w-20 h-15 flex flex-row ml-1 rounded-5 " /> </Link>
-       <ul className="nav nav-pills flex space-x-4 text-bold text-white gap-8   lg:block">
-      <li className="nav-item text-white">
-        <Link
-          to="/"
-          onClick={() => handleActive("/")}
-          className={`  text-white nav-link no-underline  hover:-translate-y-1    hover:-translate-y-1     ${
-            actives === "/" ? " actives font-semibold  actives font-semibold shadow-[0_0_25px_4px_rgba(134,239,172,0.4)]   hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7 transition-all duration-300 transform  " : "text-black"
-          }`}
-        >
-          Home
-        </Link>
-      </li>
 
-      <li className="nav-item">
-        <Link
-          to="/feed"
-          onClick={() => handleActive("/feed")}
-          className={` text-white nav-link no-underline  hover:-translate-y-1  ${
-            actives === "/feed" ? " actives font-semibold shadow-[0_0_25px_4px_rgba(134,239,172,0.4)]   hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7 transition-all duration-300 transform " : "text-black"
-          }`}
-        >
-          Feed
-        </Link>
-      </li>
+  return (
+    <>
+      <div className="fixed   top-0 z-50 w-full flex items-center justify-between px-2
+      font-medium text-[1.2rem] text-gray-300 bg-opacity-35 backdrop-blur-sm border-b border-gray-800">
 
-      <li className="nav-item">
-        <Link
-          to="/trend"
-          onClick={() => handleActive("/trend")}
-          className={` text-white nav-link no-underline  hover:-translate-y-1  ${
-            actives === "/trend" ? " actives font-semibold shadow-[0_0_25px_4px_rgba(134,239,172,0.4)]   hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7 transition-all duration-300 transform " : "text-black"
-          }`}
-        > 
-          Trend
+        {/* LOGO */}
+        <Link to="/" onClick={() => handleActive("/")}>
+          <img src="/logo.png" alt="" className="w-20 h-15  rounded-5" />
+          
         </Link>
-      </li>
 
-      <li className="nav-item">
-        <Link
-          to="/explore"
-          onClick={() => handleActive("/explore")}
-          className={` text-white nav-link no-underline  hover:-translate-y-1  ${
-            actives === "/explore" ? " actives font-semibold shadow-[0_0_25px_4px_rgba(134,239,172,0.4)]   hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7 transition-all duration-300 transform  " : "text-black"
-          }`}
-        >
-          Explore
+        <h1
+  className="
+    lg:hidden
+    text-2xl font-black
+    tracking-wide
+    text-white
+    relative
+    select-none
+    active:scale-95
+  "
+>
+  Dture
+
+  <span
+    className="
+      absolute left-0 -bottom-1
+      w-full h-[2px]
+      bg-green-400
+      opacity-70
+      rounded-full
+      shadow-[0_0_6px_rgba(74,222,128,0.6)]
+    "
+  />
+</h1>
+
+
+
+        {/* Mobile Hamburger */}
+        <button className=" lg:hidden text-white text-3xl" onClick={() => setOpen(!open)}>
+          {open ? <FaTimes /> : <FaBars />}
+        </button>
+
+        {/* Desktop Menu */}
+        <div className='hidden lg:flex'>  
+          
+          <ul className="  nav nav-pills space-x-6 gap-8">
+          { !open &&[
+            { to: "/", label: "Home" },
+            { to: "/feed", label: "Feed" },
+            { to: "/trend", label: "Trend" },
+            { to: "/explore", label: "Explore" },
+            { to: "/rooms", label: "Rooms" },
+          ].map((item) => (
+            <li key={item.to}>
+              <Link
+                to={item.to}
+                onClick={() => handleActive(item.to)}
+                className={` text-white nav-link no-underline hover:-translate-y-1 ${
+                  actives === item.to
+                    ? "actives font-semibold shadow-[0_0_25px_4px_rgba(134,239,172,0.4)] hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)] transition-all duration-300"
+                    : "text-black"
+                }`}
+              >
+                {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul></div>
+      
+
+        {/* Desktop - Right */}
+        <div className="hidden lg:flex text-xl items-center gap-4">
+          <Link to="/create" className="flex p-2 nav-link">
+            <button
+              className="bg-green-600 flex w-60 items-center h-10 rounded-5 border text-white justify-center
+              font-semibold mt-2 shadow-[0_0_25px_4px_rgba(134,239,172,0.4)]
+              hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)] transition-all duration-300 hover:-translate-y-1"
+              onClick={() => handleActive("/create")}
+            >
+              <FaPlus className="mr-2" /> Create Your Debates
+            </button>
+          </Link>
+
+          <Link to="/profile">
+            <CgProfile size={40} className="text-white" onClick={() => handleActive("/profile")} />
+          </Link>
+        </div>
+      </div>
+
+      {/* Mobile Dropdown */}
+      {open && (
+       <div className=" no-underline hover:no-underline  lg:hidden bg-gray-900/95 backdrop-blur-md w-full flex flex-col px-6 py-3 
+                justify-center items-center gap-1 mt-13">
+
+  {[
+    { to: "/", label: "Home" },
+    { to: "/feed", label: "Feed" },
+    { to: "/trend", label: "Trend" },
+    { to: "/explore", label: "Explore" },
+    { to: "/rooms", label: "Rooms" },
+  ].map((item) => (
+     <Link
+      key={item.to}
+      to={item.to}
+      onClick={() => handleActive(item.to)}
+      className={` text-white nav-link no-underline hover:-translate-y-1
+          no-underline hover:no-underline
+    w-full text-center text-lg font-medium py-1 rounded-xl
+    transition-all duration-300
+    ${
+      active === item.to
+        ? "text-green-400 bg-green-500/10 shadow-[0_0_15px_rgba(74,222,128,0.35)]"
+        : "text-gray-300 hover:text-white hover:bg-white/5"
+        }
+      `}
+    >
+      {item.label}
+    </Link>
+  ))}
+
+  {/* CTA */}
+  <Link to="/create" className=" nav-link on-underline mt-1">
+    <button
+      className="w-49 flex items-center justify-center gap-2
+                 bg-green-500 text-black text-xl font-bold py-2 rounded-5
+                 shadow-[0_0_25px_4px_rgba(134,239,172,0.4)]
+                 hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)]
+                 transition-all duration-300 "
+    >
+      <FaPlus className="text-lg" />
+      Create Your Debate
+    </button>
+  </Link>
+
+  {/* Profile */}
+  <Link
+    to="/profile"
+    className="mt-1 flex items-center justify-center
+               w-12 h-12 rounded-full bg-white/10
+               hover:bg-white/20 transition-all"
+  >
+    <CgProfile size={28} className="text-white" />
+  </Link>
+</div>
+
+      )}
+
+      {/* Notification Button */}
+      <div
+        className="fixed bottom-5 right-5 text-green-600 bg-gray-900 rounded-5 p-2 border-green-300
+        shadow-[0_0_25px_4px_rgba(134,239,172,0.4)]
+        hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)]
+        transition-all duration-300 hover:-translate-y-1"
+      >
+        <Link to="/notification">
+          <IoNotificationsSharp size={40} className="text-green-600" />
         </Link>
-      </li>
+      </div>
+    </>
+  );
+};
 
-      <li className="nav-item">
-        <Link
-          to="/rooms"
-          onClick={() => handleActive("/rooms")}
-          className={` text-white nav-link no-underline  hover:-translate-y-1    hover:-translate-y-1   ${
-            actives === "/rooms" ? " actives font-semibold  actives font-semibold shadow-[0_0_25px_4px_rgba(134,239,172,0.4)]   hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7 transition-all duration-300 transform hover:-translate-y-1 " : "text-black"
-          }`}
-        >
-          Rooms
-        </Link>
-      </li>
-    </ul>
-    
-       <div className="text-xl mt-3 flex flex-row items-center justify-center gap-4"> 
-   <Link to="/create"  className='flex flex-col p-2 nav-link'> <button className='bg-green-600 
-   no-underline flex flex-row w-60 items-center h-10 rounded-5 border text-white justify-center
-    font-semibold mt-10  actives font-semibold shadow-[0_0_25px_4px_rgba(134,239,172,0.4)]  
-     hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7 transition-all duration-300 transform 
-     hover:-translate-y-1' onClick={()=> handleActive('\create')}>
-    <FaPlus className='mt-1 mr-2 no-underline'/>Create Your Debates</button></Link>
-        <Link className="no-underline " to="/proflie">
-        <CgProfile size={40} onClick={()=> handleActive('\create')}  className="text-white ml-auto mr-4" /></Link>   
-
-   </div> 
-     </div>
-     <div className='mt-140 ml-355 fixed text-green-600 bg-gray-900 rounded-5 p-2 border-green-300 
-                         shadow-[0_0_25px_4px_rgba(134,239,172,0.4)] 
-                         hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)] 
-                         transition-all duration-300 transform hover:-translate-y-1'>
-       <Link className="no-underline " to="/notification"> <IoNotificationsSharp className='text-green-600' size={40}/> </Link>
-     </div>
-   </>)
- }
- 
- export default Navbar
- 
+export default Navbar;

@@ -84,7 +84,7 @@ const TrendDebate = () => {
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center m-45 text-center">
+        <div className="flex flex-col items-center justify-center mt-50  text-center">
           <HiTrendingUp size={100} className="text-green-500 mb-4" />
           <h1 className="text-2xl font-semibold">No Trending Debates</h1>
           <p className="text-gray-400 mt-2">

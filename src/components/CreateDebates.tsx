@@ -44,8 +44,8 @@ const CreateDebates = () => {
   };
 
   return (
-    <div className="container text-center mt-29 mb-10">
-      <div className="m-10 text-2xl ml-52 mr-52 mb-10 "> 
+    <div className="container text-center  justify-center mt-20 mb-10">
+      <div className="m-10 text-2xl  mb-10 text-center  justify-center  flex"> 
          <input
           className=" bg-gray-900 p-3  w-220 rounded-xl border-gray-600"
         placeholder="Debate Topic?"
@@ -53,7 +53,7 @@ const CreateDebates = () => {
         onChange={(e) => setName(e.target.value)}
       />
       </div>
-      <div className="m-10 text-xl ml-52 mr-52"> 
+      <div className="m-10 text-xl flex text-center  justify-center "> 
       <textarea
         className=" bg-gray-900  p-3 h-90 w-220 rounded-xl"
         rows={10}
@@ -61,7 +61,7 @@ const CreateDebates = () => {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       /> </div>
-      <div className="m-10 text-xl ml-59 mr-59"> 
+      <div className="m-10 text-xl flex text-center  justify-center "> 
         <input
         type="file"
         accept="image/*"
@@ -69,7 +69,7 @@ const CreateDebates = () => {
         className=" bg-gray-900  p-3  w-190 rounded-xl mb-10"
       />
        </div>
-      <ul className="nav nav-pills gap-40 text-3xl bg-gray-900  p-3 rounded-2xl mt-20 mb-5 ml-25 mr-25 flex  justify-center" id="pills-tab" role="tablist">
+      <ul className="nav nav-pills gap-5 text-xl lg:text-3xl bg-gray-900  p-3 lg rounded-2xl mt-20 mb-5  flex  justify-center" id="pills-tab" role="tablist">
         {["24 Hours", "3 Days", "7 Days"].map((d) => (
           <li className="text-white nav-item" key={d}>
             <button
@@ -81,9 +81,9 @@ const CreateDebates = () => {
           </li>
         ))}
       </ul>
-       <div className="text-3xl">
+       <div className="text-xl lg:text-3xl">
         <button
-        className=" actives w-85 h-15 rounded-5 font-semibold mt-8 mb-8  actives font-semibold shadow-[0_0_25px_4px_rgba(134,239,172,0.4)]   hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7 transition-all duration-300 transform hover:-translate-y-1"
+        className=" actives w-55 lg:w-80 h-15 rounded-5 font-semibold mt-8 mb-8  actives font-semibold shadow-[0_0_25px_4px_rgba(134,239,172,0.4)]   hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7 transition-all duration-300 transform hover:-translate-y-1"
         onClick={handleAddDebate}
       >
         Create Debate

@@ -6,54 +6,64 @@ import { FaFaceSmileWink } from "react-icons/fa6";
 
 const Body3 = () => {
   return (
-         <div className='  ml-31 mr-28 mb-5 p-10 border-b border-gray-800  '>
-       <div className="  flex fexl-col grid grid-cols-1  md:grid-cols-3 grid-cols-1 md:grid-row-3 gap-8">
-  <div className="row-span-3 h- full w-90 rounded-3xl overflow-hidden">
-    <img
-      src="/trending.png"   // replace with your image
-      alt="Full Column"
-      className="w-full h-full object-contain"
-    />
-  </div>
-  <div className=" col-span-2  flex items-center justify-center h-40 w-160px rounded-3xl">
-   <h1 className="absolute mt-[10px] ml-[250px] mr-[300px] text-[3.5rem] font-bold">
-   Dtrue’s Advanced Capabilities
-</h1>
+        <div className="mb-5 px-4 py-10 border-b border-gray-800">
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center max-w-7xl mx-auto">
 
-  </div> 
+    {/* IMAGE */}
+    <div className="md:row-span-3 rounded-3xl overflow-hidden flex  items-center justify-center">
+      <img
+        src="/trending.png"
+        alt="Trending"
+        className="w-full max-w-sm md:max-w-full object-contain"
+      />
+    </div>
 
-<div className="bg-green-500 h-45 w-90 p-2 boxs text-white rounded-3xl">
-<div><svg width="50"  height="29"  className="text-white mt-0 ml-10"  fill="currentColor"  aria-hidden="true">
-  <IoChatbubbleEllipsesSharp className='text-3xl'/> </svg></div>
-  <h1 className="text-[25px] font-semibold leading-tight mb-1 mt-2"> Global Trends </h1>
-  <p className="text-[20px] leading-snug opacity-70">Dtrue keeps you engaged with trending Global topics that shape our world..</p>
-  </div>
+    {/* TITLE */}
+    <div className="md:col-span-2 text-center md:text-left  items-center justify-center">
+      <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
+        Dtrue’s Advanced Capabilities
+      </h1>
+    </div>
 
-<div className="bg-green-500 h-45 w-90 p-2 boxs text-white rounded-3xl">
-<div><svg width="50"  height="29"  className="text-white mt-0 ml-10"  fill="currentColor"  aria-hidden="true">
- <CiShare2 className='text-3xl'/> </svg></div>
-  <h1 className="text-[25px] font-semibold leading-tight mb-1 mt-2"> One Opinion at a Time </h1>
-  <p className="text-[20px] leading-snug opacity-70">Join debates where every user shares.</p>
-  </div>
+    {/* CARD 1 */}
+    <div className="box p-6 text-white rounded-3xl  flex flex-col  items-center justify-center">
+      <IoChatbubbleEllipsesSharp className="text-5xl mb-3" />
+      <h1 className="text-xl font-semibold mb-2">Global Trends</h1>
+      <p className="text-base opacity-80">
+        Dtrue keeps you engaged with trending global topics that shape our world.
+      </p>
+    </div>
 
-  <div className="bg-green-500 h-45 w-90 p-2 boxs text-white rounded-3xl">
-<div><svg width="50"  height="29"  className="text-white mt-0 ml-10"  fill="currentColor"  aria-hidden="true">
- <FaFaceSmileWink className='text-3xl'/>  </svg></div>
-  <h1 className="text-[25px] font-semibold leading-tight mb-1 mt-2"> Yours Always.</h1>
-  <p className="text-[20px] leading-snug opacity-70">Every opinion is hashed— identity stays hidden.</p>
-  </div>
-  
-<div className="bg-green-500 h-45 w-90 p-2 boxs text-white rounded-3xl">
-<div><svg width="50"  height="32"  className="text-white mt-0 ml-10"  fill="currentColor"  aria-hidden="true">
-<FaArrowsDownToPeople className='text-4xl'/>  </svg></div>
-  <h1 className="text-[25px] font-semibold leading-tight mb-1 mt-2">Raise your voice. </h1>
-  <p className="text-[20px] leading-snug opacity-70">One opinion. Real impact.
-Shaping truth — together.</p>
-  </div>
+    {/* CARD 2 */}
+    <div className=" box p-6 text-white rounded-3xl  flex flex-col  items-center justify-center">
+      <CiShare2 className="text-3xl mb-3" />
+      <h1 className="text-xl font-semibold mb-2">One Opinion at a Time</h1>
+      <p className="text-base opacity-80">
+        Join debates where every user shares.
+      </p>
+    </div>
 
+    {/* CARD 3 */}
+    <div className="box p-6 text-white rounded-3xl  flex flex-col  items-center justify-center">
+      <FaFaceSmileWink className="text-5xl mb-4" />
+      <h1 className="text-xl font-semibold mb-2">Yours Always</h1>
+      <p className="text-base opacity-80">
+        Every opinion is hashed — identity stays hidden.
+      </p>
+    </div>
+
+    {/* CARD 4 */}
+    <div className="box p-6 text-white rounded-3xl flex flex-col  items-center justify-center">
+      <FaArrowsDownToPeople className="text-4xl mb-3" />
+      <h1 className="text-xl font-semibold mb-2">Raise Your Voice</h1>
+      <p className="text-base opacity-80">
+        One opinion. Real impact. Shaping truth — together.
+      </p>
+    </div>
+
+  </div>
 </div>
 
-         </div>
   )
 }
 
