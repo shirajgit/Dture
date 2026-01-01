@@ -66,20 +66,20 @@ const MineDebate = () => {
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center mt-16 text-center px-5 text-2xl">
+        <div className="flex flex-col items-center justify-center mt-16 text-center px-5 text-xl md:text-2xl">
           <IoIosChatboxes size={100} className="text-green-400 mb-4" />
           <h1 className="text-2xl font-bold text-white mb-2">
             No Debates Are Present!
           </h1>
-          <p className="text-gray-400 mb-1">
+          <p className="text-gray-400 mb-">
             Looks like you haven’t created any debates yet.
           </p>
           <p className="text-gray-400 mb-6">
             Explore more or create your own!
           </p>
 
-             <Link to="/create" className="text-white nav-link no-underline  " > 
-                    <button className="bg-gray-900 p-3 flex flex-row rounded-5  ">
+             <Link to="/create" className="text-white  nav-link no-underline  " > 
+                    <button className="bg-gray-900 h-15 md:h-18 p-3 flex flex-row rounded-5  ">
                      <MdOutlineExplore size={30} className="m-1"/> Create you own Debates</button> </Link>
         </div>
       )}
