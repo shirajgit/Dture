@@ -4,7 +4,7 @@
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](#) 
 [![Made with](https://img.shields.io/badge/made%20with-React.js-blue.svg)](#)
 
-**Online Debate App** is a responsive web application for hosting live debates. Create topics, join as speaker or audience, vote on arguments, chat in real-time, and track performance with leaderboards. Built for learners, clubs, and communities who want a simple platform to practice public speaking and critical thinking.
+**Dture App** is a responsive web application for hosting live debates. Create topics, join as speaker or audience, vote on arguments, chat in real-time, and track performance with leaderboards. Built for learners, clubs, and communities who want a simple platform to practice public speaking and critical thinking.
 
 ---
 
