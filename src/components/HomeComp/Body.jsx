@@ -3,6 +3,7 @@ import React from 'react'
 import { FaRegStar } from "react-icons/fa";
 import Body2 from './Body2';
 import Body3 from './Body3';
+import Footer from './Fotter'
 
 const Body = () => {
   return (
@@ -48,6 +49,8 @@ const Body = () => {
     
       <div ><Body2 /></div>
       <div className="mt-10"><Body3 /></div>
+  <div className='m-10'> <Footer/></div>
+       
     </div>
   )
 }

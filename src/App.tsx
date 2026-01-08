@@ -13,6 +13,7 @@ import Notification from './components/sub-components/Notification'
  
  
  
+ 
 function App() {
  
    const location = useLocation();
@@ -25,7 +26,7 @@ function App() {
         <Route path="/" element={<Home />} />       
         <Route path="/feed" element={< Feed />} />  
         <Route path="/rooms" element={<Rooms/>} />  
-        <Route path="/proflie" element={<Profile/>} /> 
+        <Route path="/profile" element={<Profile/>} /> 
          <Route path="/explore" element={<Explore/>}/> 
           <Route path="/trend" element={<Trend/>}/> 
           <Route path="/create" element={<CreateDebates/>}/> 
@@ -33,6 +34,7 @@ function App() {
         
           <Route path="/notification" element={ <Notification/>}/> 
       </Routes>
+      
        
     </>
   )
