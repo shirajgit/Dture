@@ -9,13 +9,9 @@
 ---
 
 ## Demo
-Add your demo GIF or screenshot here:
-
-`![demo](./docs/demo.gif)`
-
 Or link to a deployed site (Netlify / Vercel).
 
----
+---https://dture.vercel.app
 
 ## Features
 - Create and join live debates instantly  
@@ -41,5 +37,5 @@ Or link to a deployed site (Netlify / Vercel).
 ## Quick Start (local)
 1. Clone the repo  
    ```bash
-   git clone https://github.com/<your-username>/online-debate-app.git
-   cd online-debate-app 
+   git clone https://github.com/shirajgit/dture.git
+   cd dture 
