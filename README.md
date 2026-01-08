@@ -9,7 +9,7 @@
 ---
 
 ## Demo
-Or link to a deployed site (Netlify / Vercel).
+ link fo a deployed site 
 
 ---https://dture.vercel.app
 
