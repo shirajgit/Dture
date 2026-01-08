@@ -10,8 +10,7 @@ import Trend from './components/Trend'
 import Home from './components/Home'
 import EnterDebate from './components/sub-components/EnterDebate'
 import Notification from './components/sub-components/Notification'
-import SignUp from './components/auth/Sign-up'
-import SignIn from './components/auth/Sign-in'
+ 
  
  
 function App() {
@@ -31,8 +30,7 @@ function App() {
           <Route path="/trend" element={<Trend/>}/> 
           <Route path="/create" element={<CreateDebates/>}/> 
           <Route path="/entercreate/:id" element={<EnterDebate />} />        
-          <Route path="/sign-up" element={ <SignUp/>}/> 
-           <Route path="/sign-in" element={ <SignIn/>}/> 
+        
           <Route path="/notification" element={ <Notification/>}/> 
       </Routes>
        
