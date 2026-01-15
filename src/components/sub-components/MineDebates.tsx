@@ -1,63 +1,110 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { IoIosChatboxes, IoIosPeople } from "react-icons/io";
 import { DebateContext } from "../../DebatesContext";
 import { Link } from "react-router-dom";
 import { MdOutlineExplore } from "react-icons/md";
 import VoteBar from "./Votebar";
+import axios from "axios";
+import { IoCompass } from "react-icons/io5";
 
 const MineDebate = () => {
-  const { debates, addActiveDebate } = useContext(DebateContext);
 
-  const handleEnterDebate = (debate: any) => {
-    addActiveDebate(debate); // add to active debates array
+   const {
+    activeDebates,
+    addActiveDebate,
+    removeActiveDebate,
+  } = useContext(DebateContext);
+
+
+  const [debates, setDebates] = useState<any[]>([]);
+const [loading, setLoading] = useState(true);
+
+useEffect(() => {
+  const fetchDebates = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/debates");
+      setDebates(res.data.debates);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  fetchDebates();
+}, []);
+
+  
+   const isActive = (id: number) =>
+    activeDebates.some((debate) => debate.id === id);
 
   return (
     <>
       {debates.length > 0 ? (
-        <div className="flex flex-wrap gap-6 justify-center mt-0 px-4">
+        <div className="flex flex-wrap gap-5 justify-center mt-10">
           {debates.map((debate) => (
             <div
               key={debate.id}
-              className="relative bg-black border border-green-500/30 text-white rounded-tl-none rounded-tr-2xl rounded-bl-2xl rounded-br-2xl 
-                         shadow-[0_0_15px_2px_rgba(74,222,128,0.3)] hover:shadow-[0_0_25px_5px_rgba(74,222,128,0.6)] 
-                         transition-all duration-300 overflow-hidden"
-              style={{ width: "25rem", height: "35rem" }}
+              className="bg-black text-white p-2 rounded-2xl border border-green-300 
+                         shadow-[0_0_25px_4px_rgba(134,239,172,0.4)] 
+                         hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)] 
+                         transition-all duration-300 transform hover:-translate-y-1"
+              style={{ width: "25rem", height: "34rem" }}
             >
+              {/* Debate Image */}
               {debate.image && (
                 <img
                   src={debate.image}
-                  className="object-cover h-40 w-full rounded-tr-2xl"
+                  className="object-cover h-55 w-full rounded-t-2xl"
                   alt={debate.name}
                 />
               )}
 
-              <div className="p-4">
-                <h5 className="text-xl font-bold text-green-400">{debate.name}</h5>
-                <p className="text-gray-300 mt-1 line-clamp-3">
+              {/* Debate Info */}
+              <div className="p-2 object-cover">
+                <h5 className="text-xl font-bold h-5 overflow-hidden text-green-300">
+                  {debate.name}
+                </h5>
+                <p className="text-gray-400 mt-2 h-17 overflow-hidden">
                   {debate.description}
                 </p>
               </div>
 
-              <ul className="px-5 text-sm text-gray-400 space-y-">
-                <li>Duration: <span className="text-green-300">{debate.duration}</span></li>
-                <li className="font-semibold text-white">
-                  Created by: <span className="text-green-400">Shiraj Mujawar</span>
-                  <button className="bg-green-600 ml-3 px-3 py-1 rounded flex items-center gap-1 text-white hover:bg-green-500 transition-all">
-                    <IoIosPeople size={18} /> Joined
-                  </button>
-                </li>
-              </ul>
-               <div className="p-2">
-               <VoteBar agreeVotes={72} disagreeVotes={28} />                
+              {/* Creator + Duration */}
+              <div className="border-t border-green-300 p-1 ml-2 mr-2 text-sm">
+                <p>⏳ Duration: {debate.duration}</p>
+                <p className="font-semibold mt-2">
+                  Created by:{" "}
+                  <span className="text-green-400">Shiraj Mujawar</span>
+                </p>
               </div>
-              <div className="absolute bottom-0 left-0 w-full p-4">
+              <div className="pl-3 pr-3">
+               <VoteBar agreeVotes={50} disagreeVotes={50} />                
+              </div>
+
+              {/* Buttons */}
+              <div className="flex justify-between mt-1 items-center px-4 pb-4">
+                <button
+                  onClick={() =>
+                    isActive(debate.id)
+                      ? removeActiveDebate(debate.id)
+                      : addActiveDebate(debate)
+                  }
+                  className={`flex items-center gap-2 px-3 py-1 rounded-md text-white font-medium
+                    ${
+                      isActive(debate.id)
+                        ? "bg-green-700"
+                        : "bg-green-600 hover:bg-green-500"
+                    }
+                    transition-all duration-300`}
+                >
+                  <IoIosPeople />
+                  {isActive(debate.id) ? "Joined" : "Join"}
+                </button>
+
+                {/* Enter Debate Button */}
                 <Link to={`/entercreate/${debate.id}`}>
-                  <button
-                    className="w-full bg-green-600 hover:bg-green-500 text-black font-bold text-lg py-2 rounded-xl 
-                               shadow-[0_0_10px_2px_rgba(74,222,128,0.5)] transition-all duration-300"
-                    onClick={() => handleEnterDebate(debate)}
-                  >
+                  <button className="bg-green-600 hover:bg-green-500 text-white text-sm font-semibold px-4 py-2 rounded-md transition-all duration-300">
                     Enter Debate
                   </button>
                 </Link>
@@ -66,21 +113,12 @@ const MineDebate = () => {
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center mt-16 text-center px-5 text-xl md:text-2xl">
-          <IoIosChatboxes size={100} className="text-green-400 mb-4" />
-          <h1 className="text-2xl font-bold text-white mb-2">
-            No Debates Are Present!
-          </h1>
-          <p className="text-gray-400 mb-">
-            Looks like you haven’t created any debates yet.
+        <div className="flex flex-col items-center justify-center mt-40 text-center">
+          <IoCompass size={100} className="text-green-500 mb-4" />
+          <h1 className="text-2xl font-semibold">Explore Debates</h1>
+          <p className="text-gray-400 mt-2">
+            Discover trending debates and join the conversation!
           </p>
-          <p className="text-gray-400 mb-6">
-            Explore more or create your own!
-          </p>
-
-             <Link to="/create" className="text-white  nav-link no-underline  " > 
-                    <button className="bg-gray-900 h-15 md:h-18 p-3 flex flex-row rounded-5  ">
-                     <MdOutlineExplore size={30} className="m-1"/> Create you own Debates</button> </Link>
         </div>
       )}
     </>

@@ -1,5 +1,8 @@
 import React, { useState, useContext } from "react";
 import { DebateContext } from "../DebatesContext";
+import axios from "axios";
+import Debate from "./Debate";
+import { supabase } from "@/supabase";
 
 interface Debate {
   id: number;
@@ -10,38 +13,85 @@ interface Debate {
 }
  
 
+ 
+
 const CreateDebates = () => {
-  const { debates, addDebate } = useContext(DebateContext);
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [duration, setDuration] = useState("24 Hours");
-  const [image, setImage] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setImage(URL.createObjectURL(e.target.files[0]));
-    }
-  };
+  const file = e.target.files?.[0];
+  if (!file) return;
 
-  const handleAddDebate = () => {
-    if (!name.trim() || !description.trim()) return;
+  console.log("Selected file:", file); // 👈 MUST check
+  setImageFile(file);
+};
+
+ 
+const uploadImageToSupabase = async (file: File) => {
+  if (!file || !file.name) {
+    throw new Error("Invalid file selected");
+  }
+
+  const fileName = `${Date.now()}-${file.name}`;
+
+  const { error } = await supabase.storage
+    .from("images")
+    .upload(fileName, file, {
+      cacheControl: "3600",
+      upsert: false,
+    });
+
+  if (error) throw error;
+
+  const { data } = supabase.storage
+    .from("images")
+    .getPublicUrl(fileName);
+
+  return data.publicUrl;
+};
+
+
+const handleAddDebate = async () => {
+  if (!name.trim() || !description.trim()) return;
+
+  let imageUrl: string | null = null;
+
+  try {
+    if (imageFile) {
+      imageUrl = await uploadImageToSupabase(imageFile as unknown as File);
+    }
 
     const newDebate: Debate = {
       id: Date.now(),
       name,
       description,
       duration,
-      image,
+      image: imageUrl, // ✅ REAL URL
     };
 
-    addDebate(newDebate);
+    const res = await axios.post(
+      "http://localhost:3000/create",
+      newDebate
+    );
+
+ 
 
     setName("");
     setDescription("");
     setDuration("24 Hours");
-    setImage(null);
-  };
+    setImageFile(null);
+
+    alert("Debate created successfully 🔥");
+  } catch (error) {
+    console.error(error);
+    alert("Error creating debate");
+  }
+};
 
   return (
     <div className="container text-center mt-20 items-center justify-center  mb-10">
@@ -49,6 +99,7 @@ const CreateDebates = () => {
          <input
           className=" bg-gray-900 p-3  w-220 rounded-xl border-gray-600"
         placeholder="Debate Topic?"
+        name="title"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
@@ -58,6 +109,7 @@ const CreateDebates = () => {
         className=" bg-gray-900  p-3 h-90 w-220 rounded-xl"
         rows={10}
         placeholder="Description"
+        name="description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       /> </div>
@@ -65,6 +117,7 @@ const CreateDebates = () => {
         <input
         type="file"
         accept="image/*"
+        name="image"
         onChange={handleImageChange}
         className=" bg-gray-900  p-3  w-190 rounded-xl mb-10"
       />

@@ -4,9 +4,31 @@ import { DebateContext } from "../DebatesContext";
 import { Link } from "react-router-dom";
  
 
-const Debate = () => {
-  const { debates } = useContext(DebateContext); // get debates array
+import axios from "axios";
+import { useEffect, useState } from "react";
 
+const [debates, setDebates] = useState<any[]>([]);
+const [loading, setLoading] = useState(true);
+
+useEffect(() => {
+  const fetchDebates = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/debates");
+      setDebates(res.data.debates);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchDebates();
+}, []);
+
+
+const Debate = () => {
+ 
+  
   return (
     <div className="flex flex-wrap gap-5 justify-center mt-6">
       {debates.map((debate) => (
