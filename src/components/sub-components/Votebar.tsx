@@ -1,14 +1,18 @@
 import React from "react";
 
 const VoteBar = ({ agreeVotes, disagreeVotes }:{agreeVotes :number, disagreeVotes :number}) => {
-  const total = agreeVotes + disagreeVotes;
-  const agreePercent = total === 0 ? 0 : (agreeVotes / total) * 100;
-  const disagreePercent = 100 - agreePercent;
+const total = agreeVotes + disagreeVotes;
+
+const agreePercent =
+  total === 0 ? 0 : Math.round((agreeVotes / total) * 100);
+
+const disagreePercent =
+  total === 0 ? 0 : 100 - agreePercent;
 
   return (<>
     <div className="w-full max-w-md">
       {/* Bar */}
-      <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden flex">
+      <div className="w-full h-3 bg-gray-100 rounded-full overflow-hidden flex">
         <div
           className="bg-green-500 h-3 transition-all duration-500"
           style={{ width: `${agreePercent}% `}}

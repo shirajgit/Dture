@@ -1,66 +1,99 @@
- import { useContext } from "react";
-import MineDebate from "./sub-components/MineDebates"
+import { useContext, useEffect, useState } from "react";
+import MineDebate from "./sub-components/MineDebates";
 import { DebateContext } from "../DebatesContext";
 import { BiLogOut } from "react-icons/bi";
-import { Link } from "react-router-dom";
-import Footer from "./HomeComp/Fotter";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const Profile = () => {  
+const Profile = () => {
+  const { debates } = useContext(DebateContext);
+  const navigate = useNavigate();
 
-   const { debates } = useContext(DebateContext); // get debates array
+  const [user, setUser] = useState<any>(null);
 
-  return ( <> 
-  <div className=" fixed bg-red-500 top-17 right-4 flex items-center justify-center font-bold  rounded-5 shadow-[0_0_25px_4px_rgba(255,0,0,0.6)] hover: shadow-[0_0_25px_4px_rgba(255,0,0,0.6)]  ">
-     <Link to='/sign-up' className="nav-link on-underline" > <button className="   text-white bold no-underline flex flex-row rounded-5 p-2  ">    <BiLogOut className="mr-1"  size={20}/>Sign Out</button></Link>
-  </div>
-    <div className="text-white p-4 rounded-2xl mt-24 space-y-5" >
-         
-        <div className=" rounded-2xl object-cover   "  > 
-            <div className=" flex  h-flex bg-gray-900 rounded-2xl p-10  flex flex-row mb-10 shadow-[0_0_25px_4px_rgba(134,239,172,0.4)]  
-                         transition-all duration-300 transform  ">
-           <div className="ml-10 hidden flex flex-col lg:block"> <img src="\shiraj.jpg" alt="" className="w-30 ml-20 rounded-5" />   
-                      <div className="text-3xl font-bold mt-10">Shiraj_mujawar786</div>
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        const res = await axios.get(
+          "http://localhost:3000/user/me",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setUser(res.data);
+      } catch (err) {
+        navigate("/home");
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/sign-in");
+  };
+
+  if (!user) return <p className="text-white">Loading...</p>;
+
+  return (
+    <>
+      {/* LOGOUT */}
+      <div className="fixed top-20 right-4 bg-red-500 rounded shadow-lg">
+        <button
+          onClick={handleLogout}
+          className="text-white flex items-center p-2"
+        >
+          <BiLogOut size={20} className="mr-1" /> Sign Out
+        </button>
+      </div>
+
+      {/* PROFILE */}
+      <div className="text-white p-4 mt-24 space-y-5">
+        <div className="bg-gray-900 rounded-2xl p-10 flex shadow-lg">
+          <div className="flex items-center gap-10">
+            <img
+              src="./avatar.png"
+              className="w-29 lg:w-55 rounded-full "
+            />
+
+            <div>
+              <h1 className="text-3xl font-bold">{user.username}</h1>
+              <p className="text-gray-400">{user.email}</p>
             </div>
-            
-          <div className="container text-center">
-             
-  <div className="row flex text-center text-2xl lg:text-5xl font-semibold">
- <div className=" col lg:hidden flex lg:block mb-10">
-   <img src="\shiraj.jpg" alt="" className="w-20  rounded-5" />   
-    <div className="text-3xl font-bold mt-3 ml-2">Shiraj_mujawar786</div>
-  </div>
-    <div className="col ">
-    50
- 
-    <p className="text-lg font-sm mt-30"> Followers</p>
-    </div>
-    <div className="col ">
-      20
-    
-    <p className="text-lg font-sm mt-30"> Following</p>
-    </div>
-    <div className="col">
-    {debates.length}
-    <p className="text-lg font-sm mt-30"> Debates</p>
-    </div>
-       <p className=" mt-50 text-2xl text-white"> <br />A beta tester of Dture</p>   
-  </div>
- 
-  </div> 
-        </div>
- 
-<div  className="  flex  items-center justify-center ">
-  <div className="items-center w-full bg-gray-900 rounded-4 mb-20 shadow-[0_0_25px_4px_rgba(134,239,172,0.4)]                  
-                         transition-all duration-300 transform ">  
-    <h1 className=" ml-40 md:ml-159 text-xl font-bold text-gray-500 "> Debates </h1></div>
-  
-    </div>     
-    <MineDebate ></MineDebate>
-        </div>
-        
+          </div>
        
-    </div>
-  </>)
-}
+         <div className="ml-50 flex flex-col items-center">
+          <div className="flex gap-50 text-3xl m-10 text-center">
+            <div>
+              {debates.length}
+              <p className="text-gray-400">Debates</p>
+            </div>
+            <div>
+              0
+              <p className="text-gray-400">Followers</p>
+            </div>
+            <div>
+              0
+              <p className="text-gray-400">Following</p>
+            </div>
+          </div>
+         
+          <p className="  text-xl text-gray-300">
+            A beta tester of Dture
+          </p>
+          </div>
+        </div>
 
-export default Profile
+        <MineDebate />
+      </div>
+    </>
+  );
+};
+
+export default Profile;

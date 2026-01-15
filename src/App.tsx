@@ -10,31 +10,33 @@ import Trend from './components/Trend'
 import Home from './components/Home'
 import EnterDebate from './components/sub-components/EnterDebate'
 import Notification from './components/sub-components/Notification'
-import SignUp from './components/auth/Sign-up'
-import SignIn from './components/auth/Sign-in'
+import SignIn from './components/SignIn'
+import SignUp from './components/signup'
+ 
+ 
  
  
  
 function App() {
  
    const location = useLocation();
-   const hideNavbar = ["/sign-in", "/sign-up"].includes(location.pathname);
+   const hideNavbar = ["/sign-in", "/sign-up", "/"].includes(location.pathname);
  
   return (
     <>
         {!hideNavbar && <Navbar />}
         <Routes>
-        <Route path="/" element={<Home />} />       
+        <Route path="/home" element={<Home />} />       
         <Route path="/feed" element={< Feed />} />  
         <Route path="/rooms" element={<Rooms/>} />  
         <Route path="/profile" element={<Profile/>} /> 
          <Route path="/explore" element={<Explore/>}/> 
           <Route path="/trend" element={<Trend/>}/> 
           <Route path="/create" element={<CreateDebates/>}/> 
-          <Route path="/entercreate/:id" element={<EnterDebate />} />        
-          <Route path="/sign-up" element={ <SignUp/>}/> 
-           <Route path="/sign-in" element={ <SignIn/>}/> 
+          <Route path="/entercreate/:id" element={<EnterDebate />} />               
           <Route path="/notification" element={ <Notification/>}/> 
+          <Route path="/sign-in" element={ <SignIn/>}/> 
+          <Route path="/" element={ <SignUp/>}/>
       </Routes>
       
        

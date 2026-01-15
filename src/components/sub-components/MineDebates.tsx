@@ -79,7 +79,7 @@ useEffect(() => {
                 </p>
               </div>
               <div className="pl-3 pr-3">
-               <VoteBar agreeVotes={50} disagreeVotes={50} />                
+               <VoteBar agreeVotes={debate.agree} disagreeVotes={debate.disagree} />                
               </div>
 
               {/* Buttons */}
