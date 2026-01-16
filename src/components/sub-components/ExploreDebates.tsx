@@ -72,7 +72,7 @@ useEffect(() => {
                 <p>⏳ Duration: {debate.duration}</p>
                 <p className="font-semibold mt-2">
                   Created by:{" "}
-                  <span className="text-green-400">Shiraj Mujawar</span>
+                  <span className="text-green-400">{debate.user || "Shiraj Mujawar"}</span>
                 </p>
               </div>
               <div className="pl-3 pr-3">

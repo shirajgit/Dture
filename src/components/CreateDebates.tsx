@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { DebateContext } from "../DebatesContext";
 import axios from "axios";
 import Debate from "./Debate";
@@ -10,17 +10,37 @@ interface Debate {
   description: string;
   duration: string;
   image: string | null;
+  user: string;
 }
  
-
- 
-
 const CreateDebates = () => {
 
   const [name, setName] = useState("");
+  const [user, setUser] = useState<any>(null);
   const [description, setDescription] = useState("");
   const [duration, setDuration] = useState("24 Hours");
   const [imageFile, setImageFile] = useState<File | null>(null);
+
+    useEffect(() => {
+    const fetchProfile = async () => {
+ 
+        const token = localStorage.getItem("token");
+
+        const res = await axios.get(
+          "http://localhost:3000/user/me",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setUser(res.data);
+      
+    };
+
+    fetchProfile();
+  }, []);
 
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,15 +91,14 @@ const handleAddDebate = async () => {
       name,
       description,
       duration,
-      image: imageUrl, // ✅ REAL URL
+      image: imageUrl,
+      user: user.username, 
     };
 
     const res = await axios.post(
       "http://localhost:3000/create",
       newDebate
     );
-
- 
 
     setName("");
     setDescription("");
