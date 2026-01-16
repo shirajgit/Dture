@@ -64,7 +64,7 @@ const Navbar = () => {
           
           <ul className="  nav nav-pills space-x-6 gap-8">
           { !open &&[
-            { to: "/", label: "Home" },
+            { to: "/home", label: "Home" },
             { to: "/feed", label: "Feed" },
             { to: "/trend", label: "Trend" },
             { to: "/explore", label: "Explore" },

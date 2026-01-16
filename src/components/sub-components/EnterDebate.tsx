@@ -88,10 +88,12 @@ const found = res.data.debates.find(
     }
   };
 
+
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white pt-24 pb-28 px-6">
       {/* Header */}
-      <div className="flex items-center gap-4 bg-gradient-to-r from-green-600 to-emerald-500 p-4 rounded-2xl shadow-lg">
+      <div className="flex items-center gap-4 bg-gradient-to-r from-green-600 to-emerald-500 p-2 rounded-2xl shadow-lg">
         <img
           src={debate.image}
           alt={debate.name}

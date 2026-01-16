@@ -40,7 +40,7 @@ const SignUp = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <form
         onSubmit={handleSignUp}
-        className="bg-black p-6 rounded-lg shadow-md w-80"
+        className="bg-black p-6 rounded-lg shadow-md w-80 font-semibold mt-2 shadow-[0_0_25px_4px_rgba(134,239,172,0.4)] hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)] transition-all duration-300 hover:-translate-y-1"
       >
         <h2 className="text-2xl font-bold mb-4 text-center">Sign Up</h2>
 

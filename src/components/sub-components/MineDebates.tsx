@@ -1,13 +1,39 @@
-import { useContext, useEffect, useState } from "react";
+import { use, useContext, useEffect, useState } from "react";
 import { IoIosChatboxes, IoIosPeople } from "react-icons/io";
 import { DebateContext } from "../../DebatesContext";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { MdOutlineExplore } from "react-icons/md";
 import VoteBar from "./Votebar";
 import axios from "axios";
 import { IoCompass } from "react-icons/io5";
 
 const MineDebate = () => {
+
+   const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        const res = await axios.get(
+          "http://localhost:3000/user/me",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setUser(res.data);
+      } catch (err) {
+         
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
 
    const {
     activeDebates,
@@ -17,13 +43,19 @@ const MineDebate = () => {
 
 
   const [debates, setDebates] = useState<any[]>([]);
-const [loading, setLoading] = useState(true);
+   const [loading, setLoading] = useState(true);
+   const [filteredDebates, setFilteredDebates] = useState<any[]>([]);
 
 useEffect(() => {
   const fetchDebates = async () => {
     try {
       const res = await axios.get("http://localhost:3000/debates");
-      setDebates(res.data.debates);
+      const data = res.data.debates;
+    
+      setDebates(data);
+      console.log(data.user);
+      
+      
     } catch (err) {
       console.error(err);
     } finally {
@@ -33,16 +65,22 @@ useEffect(() => {
 
   fetchDebates();
 }, []);
-
+ 
   
+useEffect(() => { 
+  const userDebates = debates.filter((debate) => debate.user === user?.username);
+  setFilteredDebates(userDebates);
+}, [debates, user]);
+
+
    const isActive = (id: number) =>
     activeDebates.some((debate) => debate.id === id);
 
   return (
     <>
-      {debates.length > 0 ? (
+      {filteredDebates.length > 0 ? (
         <div className="flex flex-wrap gap-5 justify-center mt-10">
-          {debates.map((debate) => (
+          { filteredDebates.map((debate) => (
             <div
               key={debate.id}
               className="bg-black text-white p-2 rounded-2xl border border-green-300 
@@ -75,7 +113,7 @@ useEffect(() => {
                 <p>⏳ Duration: {debate.duration}</p>
                 <p className="font-semibold mt-2">
                   Created by:{" "}
-                  <span className="text-green-400">Shiraj Mujawar</span>
+                  <span className="text-green-400">{ debate.user}</span>
                 </p>
               </div>
               <div className="pl-3 pr-3">
