@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
@@ -9,16 +9,19 @@ const EnterDebate = () => {
   const [agreeVotes, setAgreeVotes] = useState(0);
   const [disagreeVotes, setDisagreeVotes] = useState(0);
   const [hasVoted, setHasVoted] = useState(false);
+  const [agrred , setAgreed ] = useState(false)
+  const [disagrred , setdisAgreed ] = useState(false)
+  const [commets, setCommets] = useState("")
+  const inputRef = useRef<HTMLInputElement>(null)
+  
 
   /* 🔹 Fetch single debate */
   useEffect(() => {
     const fetchDebate = async () => {
       try {
         const res = await axios.get("http://localhost:3000/debates");
-const found = res.data.debates.find(
-  (d: any) => d.id.toString() === id
-);
-
+        const found = res.data.debates.find(
+             (d: any) => d.id.toString() === id );
 
         if (found) {
           setDebate(found);
@@ -33,6 +36,7 @@ const found = res.data.debates.find(
     fetchDebate();
   }, [id]);
 
+  
   if (!debate) {
     return (
       <div className="h-screen flex items-center justify-center text-white">
@@ -60,6 +64,7 @@ const found = res.data.debates.find(
 
       setAgreeVotes(res.data.agree);
       setHasVoted(true);
+      setAgreed(true)
     } catch (err: any) {
       alert(err.response?.data?.message || "Error voting");
     }
@@ -83,10 +88,43 @@ const found = res.data.debates.find(
 
       setDisagreeVotes(res.data.disagree);
       setHasVoted(true);
+      setdisAgreed(true)
     } catch (err: any) {
       alert(err.response?.data?.message );
     }
   };
+
+  const handleCommmets = async () =>{
+      const token = localStorage.getItem("token");
+   if(agrred){
+       await axios.put(
+        `http://localhost:3000/debates/${debate._id}/aggcommets`,
+          {commets},
+          {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+
+        )
+          console.log(commets);
+          
+    } else if(disagrred) {
+     await axios.put(
+        `http://localhost:3000/debates/${debate._id}/discommets`,
+          {commets},
+         {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+        )
+               console.log(commets)
+    }
+
+  }
+
+  console.log(commets)
 
 
 
@@ -143,7 +181,7 @@ const found = res.data.debates.find(
         </div>
 
         {/* Stats */}
-        <div className="md:col-span-2 bg-white/5 border border-white/10 rounded-2xl p-5 flex flex-col items-center justify-center">
+        <div className="md:col-span-2 bg-white/5 border border-white/10 rounded-2xl p-5 flex flex-col  ">
           <h3 className="text-2xl font-semibold text-green-400 mb-4">
             Live Results
           </h3>
@@ -155,12 +193,57 @@ const found = res.data.debates.find(
             👎 Disagree: <span className="text-red-400">{disagreeVotes}</span>
           </p>
 
+         <div className="flex gap-4">
+          <div className="space-y-4 px-2 sm:px-6">
+
+  {/* Agree message (LEFT) */}
+  <div className="flex justify-start">
+    <div className="
+      max-w-[85%] sm:max-w-xs
+      bg-gradient-to-br from-green-500 to-emerald-600
+      text-white px-5 py-3
+      rounded-2xl rounded-bl-md
+      shadow-lg
+      text-sm sm:text-base
+      leading-relaxed
+    ">
+      {debate.agreeCom}
+    </div>
+  </div>
+
+  {/* Disagree message (RIGHT) */}
+      <div className="flex justify-end  ">
+    <div className="
+      max-w-[85%] sm:max-w-xs
+      bg-gradient-to-br from-red-500 to-rose-600
+      text-white px-5 py-3
+      rounded-2xl rounded-br-md
+      shadow-lg
+      text-sm sm:text-base
+      leading-relaxed
+    ">
+           {debate.disagreeCom}
+            </div>
+  </div>
+
+</div>
+
+   
+          </div>
+ 
+
           {hasVoted && (
             <p className="mt-4 text-yellow-400 font-semibold">
-              You have already voted ✔
+              You have Succesfully voted ✔
             </p>
           )}
         </div>
+      </div>
+
+      {/* Commets */}
+      <div className="m-20">
+        <input type="text"  ref={inputRef}   onChange={(e) => setCommets(e.target.value)}  className="w-110 0 bg-white text-black m-5"/>
+         <button type="submit" onClick={handleCommmets} className="w-30 bg-green-400"> Submit</button>
       </div>
     </div>
   );

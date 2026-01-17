@@ -5,11 +5,16 @@ import { BiLogOut } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+type ChildProps = {
+   NoOfdebates : (msg: number) => void;
+};
+
 const Profile = () => {
-  const { debates } = useContext(DebateContext);
+ 
   const navigate = useNavigate();
 
   const [user, setUser] = useState<any>(null);
+  const [NumDebate , setNumDebate] = useState<number>(0)
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -39,6 +44,10 @@ const Profile = () => {
     navigate("/sign-in");
   };
 
+  const Onofdebate = (Num : number) : void => {
+      setNumDebate(Num)
+  }
+  
   if (!user) return <p className="text-white">Loading...</p>;
 
   return (
@@ -54,8 +63,8 @@ const Profile = () => {
       </div>
 
       {/* PROFILE */}
-      <div className="text-white p-4 mt-24 space-y-5">
-        <div className="bg-gray-900 rounded-2xl p-10 flex shadow-lg">
+      <div className="text-white   p-4 mt-24 space-y-5">
+        <div className="bg-gray-900 rounded-2xl p-10  Sm:flex-col lg:flex shadow-lg">
           <div className="flex items-center gap-10">
             <img
               src="./avatar.png"
@@ -68,10 +77,10 @@ const Profile = () => {
             </div>
           </div>
        
-         <div className="ml-50 flex flex-col items-center">
-          <div className="flex gap-50 text-3xl m-10 text-center">
+         <div className=" ml-2 lg:ml-50 flex flex-col items-center">
+          <div className="  Sm:flex-col lg:flex  gap:5 lg:gap-50 text-3xl m-10 text-center">
             <div>
-              {debates.length}
+               {NumDebate}
               <p className="text-gray-400">Debates</p>
             </div>
             <div>
@@ -90,7 +99,7 @@ const Profile = () => {
           </div>
         </div>
 
-        <MineDebate />
+        <MineDebate NoOfdebates={Onofdebate}/>
       </div>
     </>
   );

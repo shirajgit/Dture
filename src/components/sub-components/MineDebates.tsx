@@ -1,13 +1,17 @@
-import { use, useContext, useEffect, useState } from "react";
-import { IoIosChatboxes, IoIosPeople } from "react-icons/io";
+import { FC, useContext, useEffect, useState } from "react";
+import {  IoIosPeople } from "react-icons/io";
 import { DebateContext } from "../../DebatesContext";
-import { Link, Navigate } from "react-router-dom";
-import { MdOutlineExplore } from "react-icons/md";
+import { Link } from "react-router-dom";
+ 
 import VoteBar from "./Votebar";
 import axios from "axios";
 import { IoCompass } from "react-icons/io5";
 
-const MineDebate = () => {
+type ChildProps = {
+   NoOfdebates : (msg: number) => void;
+};
+
+const MineDebate : FC<ChildProps> = ({NoOfdebates}) => {
 
    const [user, setUser] = useState<any>(null);
 
@@ -33,7 +37,8 @@ const MineDebate = () => {
 
     fetchProfile();
   }, []);
-
+ 
+ 
 
    const {
     activeDebates,
@@ -51,26 +56,29 @@ useEffect(() => {
     try {
       const res = await axios.get("http://localhost:3000/debates");
       const data = res.data.debates;
-    
-      setDebates(data);
-      console.log(data.user);
-      
-      
+      setDebates(data); 
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
     }
   };
-
   fetchDebates();
 }, []);
  
   
 useEffect(() => { 
-  const userDebates = debates.filter((debate) => debate.user === user?.username);
+  if (!user) return;
+
+  const userDebates = debates.filter(
+    (debate) => debate.user === user.username
+  );
+
   setFilteredDebates(userDebates);
-}, [debates, user]);
+
+  NoOfdebates?.(userDebates.length); // ✅ SAFE
+}, [debates, user, NoOfdebates]);
+
 
 
    const isActive = (id: number) =>
