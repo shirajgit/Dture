@@ -108,7 +108,7 @@ const Navbar = () => {
 
       {/* Mobile Dropdown */}
       {open && (
-       <div className=" no-underline hover:no-underline  lg:hidden bg-gray-900/95 backdrop-blur-md w-full flex flex-col px-6 py-3 
+       <div className=" no-underline hover:no-underline fixed z-0 top-0 lg:hidden bg-gray-900/95 backdrop-blur-md w-full flex flex-col px-6 py-3 
                 justify-center items-center gap-1 mt-13">
 
   {[

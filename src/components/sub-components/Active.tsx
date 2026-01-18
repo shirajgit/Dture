@@ -69,7 +69,7 @@ const Active = () => {
       );
       setActiveDebates(active);
     }
-  }, [debates, user]);
+  }, [debates, user]);  
 
 
  

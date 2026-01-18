@@ -97,7 +97,7 @@ useEffect(() => {
                     transition-all duration-300`}
                 >
                   <IoIosPeople />
-                  {isActive(debate.id) ? "Joined" : "Join"}
+                  {  "Joins(" }{ (debate.agree + debate.disagree)}{")"}
                 </button>
 
                 {/* Enter Debate Button */}

@@ -15,6 +15,8 @@ const Profile = () => {
 
   const [user, setUser] = useState<any>(null);
   const [NumDebate , setNumDebate] = useState<number>(0)
+  const [debates, setDebates] = useState<any[]>([]);
+  const [activeDebates, setActiveDebates] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -47,13 +49,43 @@ const Profile = () => {
   const Onofdebate = (Num : number) : void => {
       setNumDebate(Num)
   }
+
+
+  useEffect(() => {
+  const fetchDebates = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/debates");
+      const data = res.data.debates;
+    
+      setDebates(data);
+      console.log(data.user);
+      
+      
+    } catch (err) {
+      console.error(err);
+    } finally {
+     
+    }
+  };
+
+  fetchDebates();
+}, []);
+
+  useEffect(() => {
+   if (user) {
+     const active = debates.filter((debate) =>
+        debate.Voters.includes(user._id)
+      );
+      setActiveDebates(active);
+    }
+  }, [debates, user]); 
   
   if (!user) return <p className="text-white">Loading...</p>;
 
   return (
     <>
       {/* LOGOUT */}
-      <div className="fixed top-20 right-4 bg-red-500 rounded shadow-lg">
+      <div className="fixed top-21 right-8 bg-red-500 rounded-xl shadow-lg">
         <button
           onClick={handleLogout}
           className="text-white flex items-center p-2"
@@ -63,41 +95,84 @@ const Profile = () => {
       </div>
 
       {/* PROFILE */}
-      <div className="text-white   p-4 mt-24 space-y-5">
-        <div className="bg-gray-900 rounded-2xl p-10  Sm:flex-col lg:flex shadow-lg">
-          <div className="flex items-center gap-10">
-            <img
-              src="./avatar.png"
-              className="w-29 lg:w-55 rounded-full "
-            />
+      <div className="text-white   p-4 mt-11 space-y-5">
+       <div className="
+         bg-gradient-to-br from-gray-900 via-gray-950 to-black
+        border border-white/10
+         rounded-3xl
+          p-6 sm:p-5
+        shadow-2xl
+         ">
 
-            <div>
-              <h1 className="text-3xl font-bold">{user.username}</h1>
-              <p className="text-gray-400">{user.email}</p>
-            </div>
-          </div>
-       
-         <div className=" ml-2 lg:ml-50 flex flex-col items-center">
-          <div className="  Sm:flex-col lg:flex  gap:5 lg:gap-50 text-3xl m-10 text-center">
-            <div>
-               {NumDebate}
-              <p className="text-gray-400">Debates</p>
-            </div>
-            <div>
-              0
-              <p className="text-gray-400">Followers</p>
-            </div>
-            <div>
-              0
-              <p className="text-gray-400">Following</p>
-            </div>
-          </div>
-         
-          <p className="  text-xl text-gray-300">
-            A beta tester of Dture
-          </p>
-          </div>
-        </div>
+  {/* Top Section */}
+  <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+
+    {/* Avatar */}
+    <img
+      src="./avatar.png"
+      alt="User avatar"
+      className="
+        w-28 h-28 sm:w-32 sm:h-32
+        rounded-full
+        object-cover
+        ring-2 ring-emerald-900
+        shadow-lg
+      "
+    />
+
+    {/* User Info */}
+    <div className="text-center sm:text-left">
+      <h1 className="text-2xl sm:text-3xl font-bold text-white">
+        {user.username}
+      </h1>
+      <p className="text-gray-400 text-sm sm:text-base">
+        {user.email}
+      </p>
+
+      <p className="mt-2 text-sm text-emerald-400 font-medium">
+        Beta tester of Dture
+      </p>
+    </div>
+  </div>
+
+  {/* Stats */}
+  <div className="
+    mt-8
+    grid grid-cols-1 sm:grid-cols-3
+    gap-6
+    text-center
+  ">
+
+    <div className="bg-white/5 font-bold rounded-2xl py-4 border border-white/10">
+      <p className="text-3xl  text-white">
+        {NumDebate}
+      </p>
+      <p className="text-gray-400 text-lg mt-1">
+        Debates
+      </p>
+    </div>
+
+    <div className="bg-white/5 font-bold rounded-2xl py-4 border border-white/10">
+      <p className="text-3xl  text-white">
+        {activeDebates.length}
+      </p>
+      <p className="text-gray-400 text-lg mt-1">
+        Active Debates
+      </p>
+    </div>
+
+    <div className="bg-white/5 font-bold rounded-2xl py-4 border border-white/10">
+      <p className="text-3xl  text-white">
+        0
+      </p>
+      <p className="text-gray-400 text-lg mt-1">
+        Followers
+      </p>
+    </div>
+
+  </div>
+</div>
+
 
         <MineDebate NoOfdebates={Onofdebate}/>
       </div>
