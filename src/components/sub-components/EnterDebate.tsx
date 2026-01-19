@@ -16,8 +16,7 @@ const EnterDebate = () => {
   const inputRef = useRef<HTMLInputElement>(null) 
   const [hasCommets ,sethasCommets] = useState(true)
   const [user, setUser] = useState<any>(null);
-  
-
+   
  useEffect(() => {
     const fetchProfile = async () => {
  

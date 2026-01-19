@@ -2,16 +2,24 @@ import React, { useEffect, useState } from 'react'
 import { IoCompass, IoNotificationsSharp } from 'react-icons/io5'
 import { GiBackwardTime } from "react-icons/gi";
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import { IoIosPeople } from 'react-icons/io';
 import VoteBar from './Votebar';
+import { Debate } from '@/DebatesContext';
+import AIVerdictPage from './AIVerdict';
+import { useNavigate } from "react-router-dom";
+import Loading from './Pop-up';
+
+ 
+
 
 const EndedDebates = () => {
  
   const [debates, setDebates] = useState<any[]>([]);
-  const [aiResult, setAiResult] = useState<string | null>(null);
+  
   const [loading, setLoading] = useState(false);
-
+  const [hashow ,sethashow ] = useState(false)
+ const navigate = useNavigate();
 
   useEffect(() => {
   const fetchDebates = async () => {
@@ -31,14 +39,16 @@ const EndedDebates = () => {
   fetchDebates();
 }, []);
 
-const sendToAI = async () => {
+const sendToAI = async (debate : Debate) => {
   setLoading(true);
   try {
     const res = await axios.post("http://localhost:3000/ai-result", {
-      debates,
+      debate,
     });
-
-    setAiResult(res.data.result); // 👈 STORE RESULT
+      navigate("/airesult", {
+      state: { aiResult: res.data.result , debates:debate },
+    });
+ 
   } catch (err: any) {
   console.error(err.response?.data);
   alert(err.response?.data?.message || "AI failed");
@@ -50,111 +60,149 @@ const sendToAI = async () => {
 
  
 
-  return (<> 
-      <>
-      {debates.length > 0 ? (
-        <div className="flex flex-wrap gap-5 justify-center mt-10">
-          {debates.map((debate) => (
-            <div
-              key={debate.id}
-              className="bg-black text-white p-2 rounded-2xl border border-green-300 
-                         shadow-[0_0_25px_4px_rgba(134,239,172,0.4)] 
-                         hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)] 
-                         transition-all duration-300 transform hover:-translate-y-1"
-              style={{ width: "25rem", height: "34rem" }}
-            >
-              {/* Debate Image */}
-              {debate.image && (
-                <img
-                  src={debate.image}
-                  className="object-cover h-55 w-full rounded-t-2xl"
-                  alt={debate.name}
-                />
-              )}
+return (
+  <div className="min-h-screen px-4 py-6">
+    {/* Debates Grid */}
+    {debates.length > 0 ? (
+      <div className="flex flex-wrap gap-6 justify-center">
+        {debates.map((debate) => (
+          <div
+            key={debate._id}
+            className="bg-black text-white p-2 rounded-2xl border border-green-300
+                       shadow-[0_0_25px_rgba(134,239,172,0.4)] 
+                       hover:shadow-[0_0_35px_rgba(134,239,172,0.7)]
+                       transition-all transform hover:-translate-y-1"
+            style={{ width: "25rem", height: "35rem" }}
+          >
+            {/* Image */}
+            {debate.image && (
+              <img
+                src={debate.image}
+                className="object-cover h-56 w-full rounded-t-2xl"
+                alt={debate.name}
+              />
+            )}
 
-              {/* Debate Info */}
-              <div className="p-2 object-cover">
-                <h5 className="text-xl font-bold h-5 overflow-hidden text-green-300">
-                  {debate.name}
-                </h5>
-                <p className="text-gray-400 mt-2 h-17 overflow-hidden">
-                  {debate.description}
-                </p>
+            {/* Info */}
+            <div className="p-2">
+              <h5 className="text-xl font-bold text-green-300 truncate">
+                {debate.name}
+              </h5>
+              <p className="text-gray-400 mt-2 h-15 line-clamp-3">
+                {debate.description}
+              </p>
+            </div>
+
+            {/* Meta */}
+            <div className="border-t border-green-300 px-3 py-2 text-sm">
+              <p>⏳ Duration: {debate.duration}</p>
+              <p className="mt-1">
+                Created by{" "}
+                <span className="text-green-400   font-semibold">
+                  {debate.user || "Shiraj Mujawar"}
+                </span>
+              </p>
+            </div>
+
+            {/* Vote bar */}
+            <div className="px-2">
+              <VoteBar
+                agreeVotes={debate.agree}
+                disagreeVotes={debate.disagree}
+              />
+            </div>
+
+            {/* Footer */}
+            <div className="flex justify-between items-center px-4 mt-3">
+              <div className="flex items-center gap-2 bg-green-700 px-3 py-1 rounded-md text-lg">
+                <IoIosPeople />
+                Joined (
+                {debate.agree + debate.disagree})
               </div>
 
-              {/* Creator + Duration */}
-              <div className="border-t border-green-300 p-1 ml-2 mr-2 text-sm">
-                <p>⏳ Duration: {debate.duration}</p>
-                <p className="font-semibold mt-2">
-                  Created by:{" "}
-                  <span className="text-green-400">{debate.user || "Shiraj mujawar"}</span>
-                </p>
-              </div>
-              <div className="pl-3 pr-3">
-               <VoteBar agreeVotes={debate.agree} disagreeVotes={debate.disagree} />                
-              </div>
+           
+              <button
+                 disabled={loading}
+               onClick={() => sendToAI(debate)}
+               className={`px-4 py-2 rounded-lg transition
+                         ${loading
+                 ? "bg-purple-400 cursor-not-allowed"
+                 : "bg-purple-600 hover:bg-purple-500"}
+             `}
+             >
+            { "View Result 🤖"}
+             </button>
+        
+            </div>
+           
+          </div>
+        ))}
+          < Loading open={loading} text={"Loading debate result..."} /> 
+      </div>
+      
+    ) : (
+      <div className="flex flex-col items-center justify-center mt-20">
+        <GiBackwardTime className="text-green-500 mb-4" size={100} />
+        <h1 className="text-xl text-white">No Ended Debates!</h1>
+        <p className="text-gray-500 text-lg">
+          Stay tuned to see the ended debates
+        </p>
+      </div>
+    )}
 
-              {/* Buttons */}
-              <div className="flex justify-between mt-1 items-center px-4 pb-4">
-                <button
-                
-                  className={`flex items-center gap-2 px-3 py-1 rounded-md text-white font-medium
-                  
-                   
-                         "bg-green-700"
-                        "bg-green-600 hover:bg-green-500"
-                    
-                    transition-all duration-300`}
-                >
-                  <IoIosPeople />
-                  {  "Joins(" }{ (debate.agree + debate.disagree)}{")"}
-                </button>
+    {/* AI Result Section */}
+  {/* {aiResult && (
+   <div className="mt-16 flex justify-center px-4">
+  <div className="
+    relative w-full max-w-4xl
+    rounded-3xl p-[1px]
+    bg-gradient-to-br from-purple-500 via-pink-500 to-indigo-500
+    shadow-[0_0_40px_rgba(168,85,247,0.5)]
+  ">
+    <div className="
+      rounded-3xl bg-zinc-900/90 backdrop-blur-xl
+      p-8
+    ">
+ 
+      <div className="flex items-center gap-3 mb-6">
+        <div className="
+          flex items-center justify-center
+          h-10 w-10 rounded-full
+          bg-gradient-to-br from-purple-500 to-indigo-500
+          shadow-md
+        ">
+          🤖
+        </div>
+        <h2 className="text-2xl font-semibold text-purple-300 tracking-wide">
+          AI Verdict
+        </h2>
+      </div>
 
-                {/* Enter Debate Button */}
-                <Link to={`/entercreate/${debate.id}`}>
-                  <button className="bg-green-600 hover:bg-green-500 text-white text-sm font-semibold px-4 py-2 rounded-md transition-all duration-300">
-                    Enter Debate
-                  </button>
-                </Link>
+ 
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-purple-500/40 to-transparent mb-6" />
 
-                   <div className="flex justify-center mt-6">
-  <button
-    onClick={sendToAI}
-    disabled={loading}
-    className="bg-purple-600 hover:bg-purple-500 text-white px-6 py-2 rounded-xl font-semibold shadow-lg"
-  >
-    {loading ? "Generating..." : "Generate AI Result 🤖"}
-  </button>
-                    </div>
+     
+      <pre className="
+        whitespace-pre-wrap
+        text-gray-300 text-sm md:text-base
+        leading-relaxed
+        font-light
+      ">
+        {aiResult}
+      </pre>
 
-                    {aiResult && (
-                 <div className="mt-8 flex justify-center">
-                 <div className="max-w-2xl w-full bg-zinc-900 border border-purple-500 rounded-2xl p-6 shadow-[0_0_25px_rgba(168,85,247,0.5)]">
-                  <h2 className="text-xl font-bold text-purple-400 mb-3">
-                    🤖 AI Generated Result
-                   </h2>
-
-                <pre className="whitespace-pre-wrap text-gray-300 text-sm leading-relaxed">
-                 {aiResult}
-                 </pre>
+ 
+      <div className="mt-6 text-right text-xs text-gray-500">
+        Generated by AI • Debate Analysis
+      </div>
     </div>
   </div>
-)}
+</div>
 
+    )}   */}
+  </div>
+);
 
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-       <div className='flex flex-col items-center justify-center '>
-         <GiBackwardTime className='text-green-500' size={100} /> 
-         <h1> No Ended Debates!</h1>
-         <p className='text-2xl text-gray-500'>Stay tuned to see the Ended Debates</p>
-      </div>
-      )}
-    </>
- </> )
 }
 
 export default EndedDebates

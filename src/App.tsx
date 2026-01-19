@@ -13,6 +13,8 @@ import Notification from './components/sub-components/Notification'
 import SignIn from './components/SignIn'
 import SignUp from './components/signup'
 import { ToastContainer } from 'react-toastify'
+import EndedDebateView from './components/sub-components/EndedDebateView'
+import AIVerdictPage from './components/sub-components/AIVerdict'
  
  
  
@@ -38,6 +40,8 @@ function App() {
           <Route path="/notification" element={ <Notification/>}/> 
           <Route path="/sign-in" element={ <SignIn/>}/> 
           <Route path="/" element={ <SignUp/>}/>
+          <Route path="/ended/:id" element={<EndedDebateView />} />   
+           <Route path="/airesult" element={<AIVerdictPage />} />    
       </Routes>
       
  <ToastContainer

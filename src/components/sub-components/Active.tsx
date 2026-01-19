@@ -85,7 +85,7 @@ const Active = () => {
                          shadow-[0_0_25px_4px_rgba(134,239,172,0.4)] 
                          hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)] 
                          transition-all duration-300 transform hover:-translate-y-1"
-              style={{ width: "25rem", height: "34rem" }}
+              style={{ width: "25rem", height: "32rem" }}
             >
               {/* Debate Image */}
               {debate.image && (
