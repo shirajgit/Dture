@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const EnterDebate = () => {
   const { id } = useParams();
@@ -12,9 +13,9 @@ const EnterDebate = () => {
   const [agrred , setAgreed ] = useState(false)
   const [disagrred , setdisAgreed ] = useState(false)
   const [commets, setCommets] = useState("") 
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null) 
   const [hasCommets ,sethasCommets] = useState(true)
-const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<any>(null);
   
 
  useEffect(() => {
@@ -57,7 +58,7 @@ const [user, setUser] = useState<any>(null);
     };
 
     fetchDebate();
-  }, [id]);
+  }, [id,hasVoted]);
 
   
   if (!debate) {
@@ -89,9 +90,19 @@ const [user, setUser] = useState<any>(null);
       setHasVoted(true);
       setAgreed(true)
       sethasCommets(false);
-    } catch (err: any) {
-      alert(err.response?.data?.message || "Error voting");
+    }catch (err: any) {
+  toast.error(
+    err.response?.data?.message || "You already voted",
+    {
+      style: {
+        borderRadius: "14px",
+        background: "linear-gradient(135deg, #18181b, #27272a)",
+        color: "#fff",
+        fontWeight: "500",
+      },
     }
+  );
+}
   };
 
   const handleDisagree = async () => {
@@ -114,9 +125,19 @@ const [user, setUser] = useState<any>(null);
       setHasVoted(true);
       setdisAgreed(true);
       sethasCommets(false);
-    } catch (err: any) {
-      alert(err.response?.data?.message );
+    }  catch (err: any) {
+  toast.error(
+    err.response?.data?.message || "You already voted",
+    {
+      style: {
+        borderRadius: "14px",
+        background: "linear-gradient(135deg, #18181b, #27272a)",
+        color: "#fff",
+        fontWeight: "500",
+      },
     }
+  );
+}
   };
 
   const handleCommmets = async () =>{

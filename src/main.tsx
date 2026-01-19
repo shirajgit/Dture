@@ -4,6 +4,8 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { DebateProvider } from "./DebatesContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
  
 
 const container = document.getElementById("root");
@@ -14,6 +16,7 @@ root.render(
     <DebateProvider>
       <BrowserRouter>
         <App />
+        
       </BrowserRouter>
     </DebateProvider>
   </React.StrictMode>

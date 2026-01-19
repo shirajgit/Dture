@@ -3,6 +3,10 @@ import { DebateContext } from "../DebatesContext";
 import axios from "axios";
 import Debate from "./Debate";
 import { supabase } from "@/supabase";
+import { toast } from "react-toastify";
+import Popup from "./sub-components/Pop-up";
+import Loading from "./sub-components/Pop-up";
+import { Flag } from "lucide-react";
 
 interface Debate {
   id: number;
@@ -20,6 +24,8 @@ const CreateDebates = () => {
   const [description, setDescription] = useState("");
   const [duration, setDuration] = useState("24 Hours");
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false)
+   
 
     useEffect(() => {
     const fetchProfile = async () => {
@@ -82,6 +88,7 @@ const handleAddDebate = async () => {
   let imageUrl: string | null = null;
 
   try {
+        setLoading(true);
     if (imageFile) {
       imageUrl = await uploadImageToSupabase(imageFile as unknown as File);
     }
@@ -100,20 +107,35 @@ const handleAddDebate = async () => {
       newDebate
     );
 
+
     setName("");
     setDescription("");
     setDuration("24 Hours");
     setImageFile(null);
-
-    alert("Debate created successfully 🔥");
+     setLoading(true)
+       
+      toast.success( "Debate created Succesfully🔥",
+        {
+          style: {
+            borderRadius: "14px",
+            background: "linear-gradient(135deg, #18181b, #27272a)",
+            color: "#fff",
+            fontWeight: "500",
+          },
+        }
+      );
+ 
+   
   } catch (error) {
     console.error(error);
     alert("Error creating debate");
+  } finally{
+     setLoading(false)
   }
 };
 
-  return (
-    <div className="container text-center mt-20 items-center justify-center  mb-10">
+  return (<>
+      <div className="container text-center mt-20 items-center justify-center  mb-10">
       <div className="m-10 text-2xl  mb-10 items-center justify-center flex"> 
          <input
           className=" bg-gray-900 p-3  w-220 rounded-xl border-gray-600"
@@ -161,8 +183,10 @@ const handleAddDebate = async () => {
         Create Debate
       </button>
        </div>
-      
-    </div>
+        < Loading open={loading} text={"Creating debate..."} /> 
+    </div> 
+   
+    </>
   );
 };
 

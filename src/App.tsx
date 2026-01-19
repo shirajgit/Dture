@@ -12,6 +12,7 @@ import EnterDebate from './components/sub-components/EnterDebate'
 import Notification from './components/sub-components/Notification'
 import SignIn from './components/SignIn'
 import SignUp from './components/signup'
+import { ToastContainer } from 'react-toastify'
  
  
  
@@ -39,9 +40,20 @@ function App() {
           <Route path="/" element={ <SignUp/>}/>
       </Routes>
       
-       
+ <ToastContainer
+  position="top-right"
+  autoClose={2500}
+  hideProgressBar={false}
+  newestOnTop
+  closeOnClick
+  pauseOnHover
+  draggable
+  theme="dark"
+  toastClassName="backdrop-blur-md bg-zinc-900/90 text-white rounded-xl shadow-xl"
+  progressClassName="bg-gradient-to-r from-pink-500 to-red-500"
+/>
     </>
   )
 }
-
+           
 export default App
