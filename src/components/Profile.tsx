@@ -157,17 +157,20 @@ const Profile = () => {
         {activeDebates.length}
       </p>
       <p className="text-gray-400 text-lg mt-1">
-        Active Debates
+        Joined Debates
       </p>
     </div>
 
     <div className="bg-white/5 font-bold rounded-2xl py-4 border border-white/10">
-      <p className="text-3xl  text-white">
-        0
-      </p>
-      <p className="text-gray-400 text-lg mt-1">
-        Followers
-      </p>
+ <p className="text-3xl text-white">
+  2026
+</p>
+<p className="text-gray-400 text-lg mt-1">
+  Joined
+</p>
+
+  
+
     </div>
 
   </div>

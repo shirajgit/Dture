@@ -57,7 +57,7 @@ const sendToAI = async (debate : Debate) => {
   }
 };
 
-
+const DEFAULT_IMAGE = "/defult_debate.png";
  
 
 return (
@@ -75,13 +75,13 @@ return (
             style={{ width: "25rem", height: "35rem" }}
           >
             {/* Image */}
-            {debate.image && (
+           
               <img
-                src={debate.image}
+                src={debate.image || DEFAULT_IMAGE}
                 className="object-cover h-56 w-full rounded-t-2xl"
                 alt={debate.name}
               />
-            )}
+        
 
             {/* Info */}
             <div className="p-2">

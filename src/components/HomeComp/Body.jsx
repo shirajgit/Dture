@@ -21,11 +21,13 @@ const Body = () => {
 
       {/* Image */}
       <div className="my-10 flex justify-center">
+        <a  href="http://play.google.com/store/apps/details?id=com.shahnoor.dtrue"> 
         <img 
           src="/start.png" 
           alt="" 
           className="w-full max-w-[1130px] h-auto pop-in1" 
-        />
+        /></a>
+       
       </div>
 
       {/* Button */}

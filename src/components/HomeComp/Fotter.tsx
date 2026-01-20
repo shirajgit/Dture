@@ -2,8 +2,23 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaGithub, FaGooglePlay, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { AiFillInstagram } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const Footer  = () => {
+  const socialLinks = [
+  { icon: FaGithub, url: "https://github.com/shirajgit/Dture-full-" },
+  { icon: FaLinkedin, url: "https://linkedin.com/in/shiraj-mujawar" },
+  { icon: FaGooglePlay, url: "https://play.google.com/store/apps/details?id=com.shahnoor.dtrue" },
+  { icon: AiFillInstagram, url: "https://www.instagram.com/dtrue_app" },
+];
+
+  const debateLinks = [
+  { name: "Start a Debate", url: "/create" },
+  { name: "Trending Topics", url: "/trend" },
+  { name: "Community Rules", url: "/rules" },
+  { name: "Contact", url: "/contact" },
+];
+
   return (
     <footer className="relative bg-gradient-to-b from-black via-gray-950 to-black text-gray-400 overflow-hidden">
       
@@ -37,40 +52,46 @@ const Footer  = () => {
           </div>
 
           {/* Links */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Debate</h3>
-            <ul className="space-y-2 text-sm">
-              {["Start a Debate", "Trending Topics", "Community Rules", "Contact"].map(
-                (item, i) => (
-                  <motion.li
-                    key={i}
-                    whileHover={{ x: 6 }}
-                    className="cursor-pointer hover:text-green-400 transition"
-                  >
-                    {item}
-                  </motion.li>
-                )
-              )}
-            </ul>
-          </div>
+            <div>
+    <h3 className="text-white font-semibold mb-4">Debate</h3>
+    <ul className="space-y-2 text-sm">
+      {debateLinks.map(({ name, url }, i) => (
+        <motion.li
+          key={i}
+          whileHover={{ x: 6 }}
+          className="cursor-pointer hover:text-green-400 transition"
+        >
+        <Link
+  to={url}
+  className="text-white no-underline hover:no-underline focus:no-underline active:no-underline"
+>
+  {name}
+</Link>
+
+        </motion.li>
+      ))}
+    </ul>
+  </div>
 
           {/* Social */}
-          <div>
-            <h3 className="text-white font-semibold mb-4 items-center justify-center">Connect</h3>
-            <div className="flex gap-5 ml-20 text-xl">
-              {[FaGithub, FaLinkedin, FaGooglePlay, AiFillInstagram ].map((Icon, i) => (
-                <motion.a
-                  key={i}
-                  href="http://play.google.com/store/apps/details?id=com.shahnoor.dtrue"
-                  whileHover={{ scale: 1.2, rotate: 5 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="hover:text-green-400 transition"
-                >
-                  <Icon />
-                </motion.a>
-              ))}
-            </div>
-          </div>
+            <div>
+    <h3 className="text-white font-semibold mb-4 flex items-center justify-center">Connect</h3>
+    <div className="flex gap-5 ml-20 text-xl">
+      {socialLinks.map(({ icon: Icon, url }, i) => (
+        <motion.a
+          key={i}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={{ scale: 1.2, rotate: 5 }}
+          whileTap={{ scale: 0.9 }}
+          className="hover:text-green-400 transition"
+        >
+          <Icon />
+        </motion.a>
+      ))}
+    </div>
+  </div>
         </motion.div>
 
         {/* Divider */}

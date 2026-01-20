@@ -291,22 +291,26 @@ const EnterDebate = () => {
         <p className="text-xs text-gray-500">No agree comments yet</p>
       )}
 
-      {debate.agreeCom.map((e: string, index: number) => (
-        <div key={index} className="flex justify-start">
-          <div className="
-            max-w-[85%]
-       bg-gradient-to-br from-emerald-900 to-green-800
-            text-white px-4 py-2.5
-            rounded-2xl rounded-bl-md
-            shadow-md
-            text-sm
-            leading-relaxed
-            animate-fadeIn
-          ">
-            {e}
-          </div>
-        </div>
-      ))}
+    {debate.agreeCom.map(
+  (c: { user: string; commets: string }, index: number) => (
+    <div key={index} className="flex justify-start">
+      <div className="
+        max-w-[85%]
+        bg-gradient-to-br from-emerald-900 to-green-800
+        text-white px-4 py-3
+        rounded-2xl rounded-bl-md
+        shadow-md
+        text-sm
+      ">
+        <p className="text-xs text-emerald-400 font-semibold mb-1">
+          @{c.user}
+        </p>
+        <p >{c.commets}</p>
+      </div>
+    </div>
+  )
+)}
+
     </div>
 
     {/* Disagree Column */}
@@ -319,22 +323,26 @@ const EnterDebate = () => {
         </p>
       )}
 
-      {debate.disagreeCom.map((e: string, index: number) => (
-        <div key={index} className="flex justify-end">
-          <div className="
-            max-w-[85%]
-            bg-gradient-to-br from-rose-900 to-red-900
-            text-white px-4 py-2.5
-            rounded-2xl rounded-br-md
-            shadow-md
-            text-sm
-            leading-relaxed
-            animate-fadeIn
-          ">
-            {e}
-          </div>
-        </div>
-      ))}
+     {debate.disagreeCom.map(
+  (c: { user: string; commets: string }, index: number) => (
+    <div key={index} className="flex justify-end">
+      <div className="
+        max-w-[85%]
+        bg-gradient-to-br from-rose-900 to-red-900
+        text-white px-4 py-1
+        rounded-2xl rounded-br-md
+        shadow-md
+        text-lg
+      ">
+        <p className="text-lg text-rose-200 font-semibold mb-1 text-right">
+          @{c.user}
+        </p>
+        <p>{c.commets}</p>
+      </div>
+    </div>
+  )
+)}
+
     </div>
   </div>
 

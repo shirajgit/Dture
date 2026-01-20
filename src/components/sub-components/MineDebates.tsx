@@ -79,7 +79,7 @@ useEffect(() => {
   NoOfdebates?.(userDebates.length); // ✅ SAFE
 }, [debates, user, NoOfdebates]);
 
-
+const DEFAULT_IMAGE = "/defult_debate.png";
 
    const isActive = (id: number) =>
     activeDebates.some((debate) => debate.id === id);
@@ -97,15 +97,13 @@ useEffect(() => {
                          transition-all duration-300 transform hover:-translate-y-1"
               style={{ width: "25rem", height: "34rem" }}
             >
-              {/* Debate Image */}
-              {debate.image && (
+        
                 <img
-                  src={debate.image}
+                  src={debate.image || DEFAULT_IMAGE}
                   className="object-cover h-55 w-full rounded-t-2xl"
                   alt={debate.name}
                 />
-              )}
-
+          
               {/* Debate Info */}
               <div className="p-2 object-cover">
                 <h5 className="text-xl font-bold h-5 overflow-hidden text-green-300">

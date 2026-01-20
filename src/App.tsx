@@ -15,6 +15,8 @@ import SignUp from './components/signup'
 import { ToastContainer } from 'react-toastify'
 import EndedDebateView from './components/sub-components/EndedDebateView'
 import AIVerdictPage from './components/sub-components/AIVerdict'
+import CommunityRules from './components/CommunityRules'
+import Contact from './components/Contact'
  
  
  
@@ -41,7 +43,9 @@ function App() {
           <Route path="/sign-in" element={ <SignIn/>}/> 
           <Route path="/" element={ <SignUp/>}/>
           <Route path="/ended/:id" element={<EndedDebateView />} />   
-           <Route path="/airesult" element={<AIVerdictPage />} />    
+           <Route path="/airesult" element={<AIVerdictPage />} /> 
+           <Route path="/rules" element={<CommunityRules />} /> 
+           <Route path="/contact" element={<Contact />} />  
       </Routes>
       
  <ToastContainer

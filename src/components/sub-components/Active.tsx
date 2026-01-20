@@ -71,7 +71,7 @@ const Active = () => {
     }
   }, [debates, user]);  
 
-
+const DEFAULT_IMAGE = "/defult_debate.png";
  
 
   return (
@@ -88,13 +88,13 @@ const Active = () => {
               style={{ width: "25rem", height: "32rem" }}
             >
               {/* Debate Image */}
-              {debate.image && (
+            
                 <img
-                  src={debate.image}
+                  src={debate.image || DEFAULT_IMAGE}
                   className="object-cover h-55 w-full rounded-t-2xl"
                   alt={debate.name}
                 />
-              )}
+            
 
               {/* Debate Info */}
               <div className="p-2 object-cover">

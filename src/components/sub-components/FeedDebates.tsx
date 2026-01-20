@@ -48,7 +48,7 @@ useEffect(() => {
      // store in active debates
     navigate(`/entercreate/${debate.id}`); // go to that debate's page
   };
-
+const DEFAULT_IMAGE = "/defult_debate.png"
   
 
   return (
@@ -65,13 +65,13 @@ useEffect(() => {
               style={{ width: "25rem", height: "34rem" }}
             >
               {/* Debate Image */}
-              {debate.image && (
+               
                 <img
-                  src={debate.image}
+                  src={debate.image || DEFAULT_IMAGE}
                   className="object-cover h-55 w-full rounded-t-2xl"
-                  alt={debate.name}
+                  alt={debate.name || "Debate Image"}
                 />
-              )}
+            
 
               {/* Debate Info */}
               <div className="p-2 object-cover">

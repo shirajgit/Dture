@@ -28,6 +28,8 @@ const TrendDebate = () => {
     fetchDebates();
   }, []);
 
+  const DEFAULT_IMAGE = "/defult_debate.png";
+
   const isActive = (id: number) =>
     activeDebates.some((debate) => debate.id === id);
 
@@ -52,31 +54,59 @@ const TrendDebate = () => {
             <div
               key={debate.id}
               className="relative bg-black text-white p-2 rounded-2xl border border-green-300
-                         shadow-[0_0_25px_4px_rgba(134,239,172,0.4)]
+                         shadow-[0_0_25px_4px_rgba(134,239,172,0.4)] 
                          hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)]
                          transition-all duration-300 transform hover:-translate-y-1"
-              style={{ width: "25rem", height: "34rem" }}
+              style={{ width: "25rem", height: "35rem" }}
             >
               {/* 🏆 Rank Badge */}
-              <div className="absolute top-3 right-3 bg-green-600 text-white text-xs px-3 py-1 rounded-full font-bold">
-                #{index + 1}
-              </div>
+            <div
+  className={`
+    absolute top-3 right-3
+    px-3 py-1 rounded-full text-xs font-bold text-white
+    ${
+      index === 0
+        ? "bg-gradient-to-r from-yellow-400 to-orange-500 shadow-[0_0_25px_rgba(251,191,36,1)]"
+        : index === 1
+        ? "bg-gradient-to-r from-gray-300 to-gray-500 shadow-[0_0_25px_rgba(156,163,175,1)]"
+        : index === 2
+        ? "bg-gradient-to-r from-amber-700 to-yellow-800 shadow-[0_0_25px_rgba(180,83,9,1)]"
+        : "bg-gradient-to-r from-green-400 to-emerald-600 shadow-[0_0_18px_rgba(34,197,94,0.9)]"
+    }
+  `}
+>
+  #{index + 1}
+</div>
+
 
               {/* 🔥 Trending Badge */}
               {index < 3 && (
-                <div className="absolute top-3 left-3 bg-yellow-400 text-black text-xs px-3 py-1 rounded-full font-bold">
-                  🔥 Trending
-                </div>
+               <div
+  className="
+    absolute top-3 left-3
+    flex items-center gap-1
+    px-3 py-1
+    rounded-full
+    text-xs font-bold tracking-wide
+    bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500
+    text-black
+    shadow-[0_0_20px_rgba(251,191,36,0.9)]
+    animate-pulse
+  "
+>
+  🔥 Trending
+</div>
+
               )}
 
               {/* Debate Image */}
-              {debate.image && (
+          
                 <img
-                  src={debate.image}
+                  src={debate.image || DEFAULT_IMAGE}
                   className="object-cover h-55 w-full rounded-t-2xl"
-                  alt={debate.name}
+                  alt={debate.name || ""}
                 />
-              )}
+        
 
               {/* Debate Info */}
               <div className="p-2">

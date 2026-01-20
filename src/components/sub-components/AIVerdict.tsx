@@ -68,7 +68,7 @@ const AIVerdictPage = () => {
 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6">
 
   {/* Total */}
-  <div className="rounded-2xl bg-zinc-800/60 border border-zinc-700 p-5 text-center">
+  <div className="rounded-2xl bg-zinc-800/60 border border-zinc-700 p-3 text-center">
     <p className="text-2xl text-gray-400">Total Votes</p>
     <p className="text-4xl font-bold text-white mt-1">
         {debate.agree + debate.disagree}
@@ -76,7 +76,7 @@ const AIVerdictPage = () => {
   </div>
 
   {/* Agree */}
-  <div className="rounded-2xl bg-green-500/10 border border-green-500/30 p-5 text-center">
+  <div className="rounded-2xl bg-green-500/10 border border-green-500/30 p-3 text-center">
     <p className="text-2xl text-green-400">Agree 👍</p>
     <p className="text-4xl font-bold text-green-400 mt-1">
       {debate.agree}
@@ -85,7 +85,7 @@ const AIVerdictPage = () => {
   </div>
 
   {/* Disagree */}
-  <div className="rounded-2xl bg-red-500/10 border border-red-500/30 p-5 text-center">
+  <div className="rounded-2xl bg-red-500/10 border border-red-500/30 p-3 text-center">
     <p className="text-2xl text-red-400">Disagree 👎</p>
     <p className="text-4xl font-bold text-red-400 mt-1">
       {debate.disagree}
@@ -101,15 +101,98 @@ const AIVerdictPage = () => {
           />
         </div>
   </div>
+  <div className="text-center">
+  <h1 className="text-3xl md:text-4xl font-bold text-white tracking-widest">
+    COMMENTS
+  </h1>
+  <div className="mt-3 mx-auto h-[2px] w-32 bg-gradient-to-r from-transparent via-green-400 to-transparent shadow-[0_0_15px_rgba(34,197,94,0.7)]" />
+</div>
+
+<div className="mt-2 grid grid-cols-1 md:grid-cols-2 p-10 gap-6">
+
+  {/* AGREE COMMENTS */}
+  <div className="space-y-4">
+    <h3 className="text-green-400 font-bold text-lg">👍 Agree</h3>
+
+    {debate.agreeCom.map(
+      (c: { user: string; commets: string }, index: number) => (
+        <div key={index} className="flex justify-start">
+          <div
+            className="
+              max-w-[90%]
+              bg-gradient-to-br from-emerald-900 to-green-800
+              text-white px-4 py-1
+              rounded-2xl rounded-bl-md
+              shadow-lg
+              text-sm
+            "
+          >
+            <p className="text-xs text-emerald-300 font-semibold mb-1">
+              @{c.user}
+            </p>
+            <p>{c.commets}</p>
+          </div>
+        </div>
+      )
+    )}
+  </div>
+
+  {/* DISAGREE COMMENTS */}
+  <div className="space-y-4">
+   
+    <h3 className="text-red-400 font-bold text-lg text-right">👎 Disagree</h3>
+
+    {debate.disagreeCom.map(
+      (c: { user: string; commets: string }, index: number) => (
+        <div key={index} className="flex justify-end">
+          <div
+            className="
+              max-w-[90%]
+              bg-gradient-to-br from-rose-900 to-red-900
+              text-white px-4 py-1
+              rounded-2xl rounded-br-md
+              shadow-lg
+              text-sm
+            "
+          >
+            <p className="text-xs text-rose-300 font-semibold mb-1 text-right">
+              @{c.user}
+            </p>
+            <p className="text-right">{c.commets}</p>
+          </div>
+        </div>
+      )
+    )}
+  </div>
+
+</div>
+
+
+
     </div>
 
     {/* AI Verdict Section */}
-    <div className="text-center space-y-2">
-      <h2 className="text-4xl font-bold text-white">Debate Result</h2>
-      <p className="text-gray-400">
-        AI-generated final verdict based on discussion analysis
-      </p>
-    </div>
+ <div className="text-center space-y-3 my-8 relative">
+  <h2 className="
+    text-4xl md:text-5xl font-extrabold
+    bg-gradient-to-r from-purple-400 via-pink-500 to-indigo-400
+    bg-clip-text text-transparent
+    tracking-wide
+  ">
+    Debate Result
+  </h2>
+
+  <p className="text-gray-400 text-sm md:text-base">
+    AI-generated final verdict based on discussion analysis
+  </p>
+
+  <div className="
+    mx-auto mt-3 h-[2px] w-44
+    bg-gradient-to-r from-transparent via-purple-500 to-transparent
+    shadow-[0_0_20px_rgba(168,85,247,0.8)]
+  " />
+</div>
+
 
     {/* Verdict Card */}
     <div className="flex justify-center">

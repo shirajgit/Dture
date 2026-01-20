@@ -107,62 +107,69 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Dropdown */}
-      {open && (
-       <div className=" no-underline hover:no-underline fixed z-0 top-0 lg:hidden bg-gray-900/95 backdrop-blur-md w-full flex flex-col px-6 py-3 
-                justify-center items-center gap-1 mt-13">
+     {open && (
+  <>
+    {/* BACKDROP */}
+    <div
+      className="fixed inset-0 z-10 bg-black/50 backdrop-blur-sm"
+      onClick={() => setOpen(false)} // clicking outside closes menu
+    ></div>
 
-  {[
-    { to: "/", label: "Home" },
-    { to: "/feed", label: "Feed" },
-    { to: "/trend", label: "Trend" },
-    { to: "/explore", label: "Explore" },
-    { to: "/rooms", label: "Rooms" },
-  ].map((item) => (
-     <Link
-      key={item.to}
-      to={item.to}
-      onClick={() => handleActive(item.to)}
-      className={` text-white nav-link no-underline hover:-translate-y-1
-          no-underline hover:no-underline
-    w-full text-center text-lg font-medium py-1 rounded-xl
-    transition-all duration-300
-    ${
-      active === item.to
-        ? "text-green-400 bg-green-500/10 shadow-[0_0_15px_rgba(74,222,128,0.35)]"
-        : "text-gray-300 hover:text-white hover:bg-white/5"
-        }
-      `}
-    >
-      {item.label}
-    </Link>
-  ))}
+    {/* MOBILE MENU */}
+    <div className="fixed z-20 top-0 lg:hidden w-full flex flex-col px-6 py-3 justify-center items-center gap-2 mt-14
+                    bg-gray-900/95 backdrop-blur-md rounded-b-3xl shadow-xl transition-all duration-300">
+      
+      {/* Links */}
+      {[
+        { to: "/", label: "Home" },
+        { to: "/feed", label: "Feed" },
+        { to: "/trend", label: "Trend" },
+        { to: "/explore", label: "Explore" },
+        { to: "/rooms", label: "Rooms" },
+      ].map((item) => (
+        <Link
+          key={item.to}
+          to={item.to}
+          onClick={() => handleActive(item.to)}
+          className={`text-white nav-link w-full text-center text-lg font-medium py-2 rounded-xl
+                      transition-all duration-300
+                      ${
+                        active === item.to
+                          ? "text-green-400 bg-green-500/10 shadow-[0_0_15px_rgba(74,222,128,0.35)]"
+                          : "text-gray-300 hover:text-white hover:bg-white/5"
+                      }`}
+        >
+          {item.label}
+        </Link>
+      ))}
 
-  {/* CTA */}
-  <Link to="/create" className=" nav-link on-underline mt-1">
-    <button
-      className="w-49 flex items-center justify-center gap-2
-                 bg-green-500 text-black text-xl font-bold py-2 rounded-5
-                 shadow-[0_0_25px_4px_rgba(134,239,172,0.4)]
-                 hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)]
-                 transition-all duration-300 "
-    >
-      <FaPlus className="text-lg" />
-      Create Your Debate
-    </button>
-  </Link>
+      {/* CTA Button */}
+      <Link to="/create" className="w-full mt-2">
+        <button
+          className="w-full flex items-center justify-center gap-2
+                     bg-green-500 text-black text-xl font-bold py-2 rounded-2xl
+                     shadow-[0_0_25px_4px_rgba(134,239,172,0.4)]
+                     hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)]
+                     transition-all duration-300"
+        >
+          <FaPlus className="text-lg" />
+          Create Your Debate
+        </button>
+      </Link>
 
-  {/* Profile */}
-  <Link
-    to="/profile"
-    className="mt-1 flex items-center justify-center
-               w-12 h-12 rounded-full bg-white/10
-               hover:bg-white/20 transition-all"
-  >
-    <CgProfile size={28} className="text-white" />
-  </Link>
-</div>
+      {/* Profile Icon */}
+      <Link
+        to="/profile"
+        className="mt-3 flex items-center justify-center
+                   w-12 h-12 rounded-full bg-white/10
+                   hover:bg-white/20 transition-all"
+      >
+        <CgProfile size={28} className="text-white" />
+      </Link>
+    </div>
+  </>
+)}
 
-      )}
 
       {/* Notification Button */}
       <div

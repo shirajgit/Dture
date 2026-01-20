@@ -40,6 +40,8 @@ const ExploreDebate = () => {
       .includes(search.toLowerCase())
   );
 
+  const DEFAULT_IMAGE = "/defult_debate.png";
+
   if (loading) {
     return (
       <div className="flex justify-center mt-40 text-green-400 text-xl">
@@ -65,23 +67,23 @@ const ExploreDebate = () => {
       className="
         flex items-center w-full
         bg-black/80 backdrop-blur-xl
-        rounded-2xl px-4
+        rounded-2xl px-4 text-2xl
       "
     >
       <CiSearch
         size={36}
-        className="text-green-400 mr-3 rounded-full animate-pulse"
+        className="text-green-400 mr-3 rounded-full  "
       />
 
       <input
         type="text"
-        placeholder="Search debates..."
+        placeholder="Search debates By(Creator,Dis,Title)..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         className="
           w-full bg-transparent
-          text-white text-lg
-          py-4
+          text-white text-2xl
+          py-3
           focus:outline-none
           placeholder:text-gray-400
         "
@@ -100,16 +102,16 @@ const ExploreDebate = () => {
                          shadow-[0_0_25px_4px_rgba(134,239,172,0.4)]
                          hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)]
                          transition-all duration-300 transform hover:-translate-y-1"
-              style={{ width: "25rem", height: "34rem" }}
+              style={{ width: "25rem", height: "35rem" }}
             >
               {/* Debate Image */}
-              {debate.image && (
+               
                 <img
-                  src={debate.image}
+                  src={debate.image || DEFAULT_IMAGE}
                   className="object-cover h-55 w-full rounded-t-2xl"
                   alt={debate.name}
                 />
-              )}
+              
 
               {/* Debate Info */}
               <div className="p-2">
