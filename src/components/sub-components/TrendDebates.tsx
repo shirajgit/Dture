@@ -2,53 +2,73 @@ import { useContext, useEffect, useState } from "react";
 import { IoIosPeople } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { DebateContext } from "../../DebatesContext";
-import { HiTrendingUp } from "react-icons/hi";
 import VoteBar from "./Votebar";
 import axios from "axios";
 import { IoCompass } from "react-icons/io5";
 
 const TrendDebate = () => {
-  const {
-   
-    activeDebates,
-    addActiveDebate,
-    removeActiveDebate,
-  } = useContext(DebateContext);
+  const { activeDebates, addActiveDebate, removeActiveDebate } =
+    useContext(DebateContext);
 
   const [debates, setDebates] = useState<any[]>([]);
-const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
-useEffect(() => {
-  const fetchDebates = async () => {
-    try {
-      const res = await axios.get("http://localhost:3000/debates");
-      setDebates(res.data.debates);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  useEffect(() => {
+    const fetchDebates = async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/debates");
+        setDebates(res.data.debates);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  fetchDebates();
-}, []);
+    fetchDebates();
+  }, []);
 
   const isActive = (id: number) =>
     activeDebates.some((debate) => debate.id === id);
 
+  // 🔥 RANKING SYSTEM (agree + disagree)
+  const rankedDebates = [...debates].sort(
+    (a, b) => b.agree + b.disagree - (a.agree + a.disagree)
+  );
+
+  if (loading) {
+    return (
+      <div className="flex justify-center mt-40 text-green-400 text-xl">
+        Loading debates...
+      </div>
+    );
+  }
+
   return (
-     <>
-      {debates.length > 0 ? (
-        <div className="flex flex-wrap gap-5 justify-center mt-30">
-          {debates.map((debate) => (
+    <>
+      {rankedDebates.length > 0 ? (
+        <div className="flex flex-wrap gap-6 justify-center mt-30">
+          {rankedDebates.map((debate, index) => (
             <div
               key={debate.id}
-              className="bg-black text-white p-2 rounded-2xl border border-green-300 
-                         shadow-[0_0_25px_4px_rgba(134,239,172,0.4)] 
-                         hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)] 
+              className="relative bg-black text-white p-2 rounded-2xl border border-green-300
+                         shadow-[0_0_25px_4px_rgba(134,239,172,0.4)]
+                         hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)]
                          transition-all duration-300 transform hover:-translate-y-1"
               style={{ width: "25rem", height: "34rem" }}
             >
+              {/* 🏆 Rank Badge */}
+              <div className="absolute top-3 right-3 bg-green-600 text-white text-xs px-3 py-1 rounded-full font-bold">
+                #{index + 1}
+              </div>
+
+              {/* 🔥 Trending Badge */}
+              {index < 3 && (
+                <div className="absolute top-3 left-3 bg-yellow-400 text-black text-xs px-3 py-1 rounded-full font-bold">
+                  🔥 Trending
+                </div>
+              )}
+
               {/* Debate Image */}
               {debate.image && (
                 <img
@@ -59,8 +79,8 @@ useEffect(() => {
               )}
 
               {/* Debate Info */}
-              <div className="p-2 object-cover">
-                <h5 className="text-xl font-bold h-5 overflow-hidden text-green-300">
+              <div className="p-2">
+                <h5 className="text-xl font-bold text-green-300 truncate">
                   {debate.name}
                 </h5>
                 <p className="text-gray-400 mt-2 h-17 overflow-hidden">
@@ -69,19 +89,26 @@ useEffect(() => {
               </div>
 
               {/* Creator + Duration */}
-              <div className="border-t border-green-300 p-1 ml-2 mr-2 text-sm">
+              <div className="border-t border-green-300 p-2 text-sm">
                 <p>⏳ Duration: {debate.duration}</p>
-                <p className="font-semibold mt-2">
+                <p className="font-semibold mt-1">
                   Created by:{" "}
-          <span className="text-green-400">{debate.user || "Shiraj Mujawar"}</span>
+                  <span className="text-green-400">
+                    {debate.user || "Shiraj Mujawar"}
+                  </span>
                 </p>
               </div>
-              <div className="pl-3 pr-3">
-               <VoteBar agreeVotes={debate.agree} disagreeVotes={debate.disagree} />                
+
+              {/* Vote Bar */}
+              <div className="px-3">
+                <VoteBar
+                  agreeVotes={debate.agree}
+                  disagreeVotes={debate.disagree}
+                />
               </div>
 
               {/* Buttons */}
-              <div className="flex justify-between mt-1 items-center px-4 pb-4">
+              <div className="flex justify-between items-center px-4 pb-4 mt-2">
                 <button
                   onClick={() =>
                     isActive(debate.id)
@@ -97,10 +124,9 @@ useEffect(() => {
                     transition-all duration-300`}
                 >
                   <IoIosPeople />
-                  {  "Joins(" }{ (debate.agree + debate.disagree)}{")"}
+                  Joins ({debate.agree + debate.disagree})
                 </button>
 
-                {/* Enter Debate Button */}
                 <Link to={`/entercreate/${debate.id}`}>
                   <button className="bg-green-600 hover:bg-green-500 text-white text-sm font-semibold px-4 py-2 rounded-md transition-all duration-300">
                     Enter Debate
