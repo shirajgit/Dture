@@ -5,7 +5,7 @@ import { IoNotificationsSharp } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-  const [actives, setActives] = useState("/");
+  const [actives, setActives] = useState("/home");
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("/");
 
@@ -22,7 +22,7 @@ const Navbar = () => {
       font-medium text-[1.2rem] text-gray-300 bg-opacity-35 backdrop-blur-sm border-b border-gray-800">
 
         {/* LOGO */}
-        <Link to="/" onClick={() => handleActive("/")}>
+        <Link to="/home" onClick={() => handleActive("/home")}>
           <img src="/logo.png" alt="" className="w-20 h-15  rounded-5" />
           
         </Link>

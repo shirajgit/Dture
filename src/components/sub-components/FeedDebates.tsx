@@ -12,9 +12,9 @@ import { IoCompass } from "react-icons/io5";
 
 
 const FeedDebate = () => {
+
   
-  const {
-   
+  const {  
     activeDebates,
     addActiveDebate,
     removeActiveDebate,
@@ -27,8 +27,8 @@ const [loading, setLoading] = useState(true);
 useEffect(() => {
   const fetchDebates = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/debates");
-      setDebates(res.data.debates);
+      const res = await axios.get(`https://dture-backend-1.onrender.com/debates`);
+      setDebates(res.data?.debates);
     } catch (err) {
       console.error(err);
     } finally {
@@ -53,7 +53,7 @@ const DEFAULT_IMAGE = "/defult_debate.png"
 
   return (
        <>
-      {debates.length > 0 ? (
+      {debates?.length > 0 ? (
         <div className="flex flex-wrap gap-5 justify-center mt-10">
           {debates.map((debate) => (
             <div

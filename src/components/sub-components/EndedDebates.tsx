@@ -24,7 +24,7 @@ const EndedDebates = () => {
   useEffect(() => {
   const fetchDebates = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/delete-debates");
+      const res = await axios.get("https://dture-backend-1.onrender.com/delete-debates");
       const data = res.data.debates;
       setDebates(data);
       console.log(data.user); 
@@ -42,7 +42,7 @@ const EndedDebates = () => {
 const sendToAI = async (debate : Debate) => {
   setLoading(true);
   try {
-    const res = await axios.post("http://localhost:3000/ai-result", {
+    const res = await axios.post("https://dture-backend-1.onrender.com/ai-result", {
       debate,
     });
       navigate("/airesult", {

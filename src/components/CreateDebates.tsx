@@ -28,7 +28,7 @@ const CreateDebates = () => {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        const res = await axios.get("http://localhost:3000/user/me", {
+        const res = await axios.get("https://dture-backend-1.onrender.com/user/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -91,7 +91,7 @@ const CreateDebates = () => {
         user: user.username,
       };
 
-      await axios.post("http://localhost:3000/create", newDebate);
+      await axios.post("https://dture-backend-1.onrender.com/create", newDebate);
 
       // Reset form
       setName("");

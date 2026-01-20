@@ -115,6 +115,17 @@ const Footer  = () => {
           </p>
         </motion.div>
       </div>
+       <div className="mt-6 text-center text-xs text-gray-500">
+          Designed & Developed with ❤️ by{" "}
+             <Link
+                to="https://shiraj-portfolio.vercel.app/"
+               target="_blank"
+               rel="noopener noreferrer"
+                className="text-indigo-400 hover:text-indigo-300 transition"
+              >
+               Shiraj Mujawar
+             </Link>
+            </div>
     </footer>
   );
 };

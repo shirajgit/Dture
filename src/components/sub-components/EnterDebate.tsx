@@ -23,7 +23,7 @@ const EnterDebate = () => {
         const token = localStorage.getItem("token");
 
         const res = await axios.get(
-          "http://localhost:3000/user/me",
+          "https://dture-backend-1.onrender.com/user/me",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -42,7 +42,7 @@ const EnterDebate = () => {
   useEffect(() => {
     const fetchDebate = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/debates");
+        const res = await axios.get("https://dture-backend-1.onrender.com/debates");
         const found = res.data.debates.find(
              (d: any) => d.id.toString() === id );
 
@@ -76,7 +76,7 @@ const EnterDebate = () => {
       const token = localStorage.getItem("token");
 
       const res = await axios.put(
-        `http://localhost:3000/debates/${debate._id}/agree`,
+        `https://dture-backend-1.onrender.com/debates/${debate._id}/agree`,
         {},
         {
           headers: {
@@ -111,7 +111,7 @@ const EnterDebate = () => {
       const token = localStorage.getItem("token");
 
       const res = await axios.put(
-        `http://localhost:3000/debates/${debate._id}/disagree`,
+        `https://dture-backend-1.onrender.com/debates/${debate._id}/disagree`,
         {},
         {
           headers: {
@@ -143,7 +143,7 @@ const EnterDebate = () => {
    
  if(agrred){
        try{const res = await axios.put(
-        `http://localhost:3000/debates/${debate._id}/aggcommets`,
+        `https://dture-backend-1.onrender.com/debates/${debate._id}/aggcommets`,
           {commets , user: user.username},
           {
           headers: {
@@ -158,7 +158,7 @@ const EnterDebate = () => {
 
     } else if(disagrred) {
    try{ const  res =  await axios.put(
-  `http://localhost:3000/debates/${debate._id}/discommets`,
+  `https://dture-backend-1.onrender.com/debates/${debate._id}/discommets`,
   { commets,user: user.username },
   {
     headers: {

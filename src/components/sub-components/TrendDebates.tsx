@@ -16,7 +16,7 @@ const TrendDebate = () => {
   useEffect(() => {
     const fetchDebates = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/debates");
+        const res = await axios.get("https://dture-backend-1.onrender.com/debates");
         setDebates(res.data.debates);
       } catch (err) {
         console.error(err);

@@ -14,7 +14,7 @@ const EndedDebateView = () => {
     const fetchDebate = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3000/delete-debates/${id}`
+          `https://dture-backend-1.onrender.com/delete-debates/${id}`
         );
         setDebate(res.data);
       } catch (err) {

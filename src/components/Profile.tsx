@@ -24,7 +24,7 @@ const Profile = () => {
         const token = localStorage.getItem("token");
 
         const res = await axios.get(
-          "http://localhost:3000/user/me",
+          "https://dture-backend-1.onrender.com/user/me",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -54,7 +54,7 @@ const Profile = () => {
   useEffect(() => {
   const fetchDebates = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/debates");
+      const res = await axios.get("https://dture-backend-1.onrender.com/debates");
       const data = res.data.debates;
     
       setDebates(data);
