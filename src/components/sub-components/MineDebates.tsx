@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import VoteBar from "./Votebar";
 import axios from "axios";
 import { IoCompass } from "react-icons/io5";
+import Loading from "./Pop-up";
 
 type ChildProps = {
    NoOfdebates : (msg: number) => void;
@@ -84,8 +85,11 @@ const DEFAULT_IMAGE = "/defult_debate.png";
    const isActive = (id: number) =>
     activeDebates.some((debate) => debate.id === id);
 
+ 
+
   return (
     <>
+    <Loading open={loading} text="Fetching debates..." />
       {filteredDebates.length > 0 ? (
         <div className="flex flex-wrap gap-5 justify-center mt-10">
           { filteredDebates.map((debate) => (

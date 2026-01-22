@@ -8,6 +8,7 @@ import VoteBar from "./Votebar";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { IoCompass } from "react-icons/io5";
+import Loading from "./Pop-up";
 
 
 
@@ -49,10 +50,10 @@ useEffect(() => {
     navigate(`/entercreate/${debate.id}`); // go to that debate's page
   };
 const DEFAULT_IMAGE = "/defult_debate.png"
-  
 
   return (
-       <>
+       <> 
+       <Loading open={loading} text="Fetching debates..." />
       {debates?.length > 0 ? (
         <div className="flex flex-wrap gap-5 justify-center mt-10">
           {debates.map((debate) => (

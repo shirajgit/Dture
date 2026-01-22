@@ -6,6 +6,7 @@ import { IoCompass } from "react-icons/io5";
 import VoteBar from "./Votebar";
 import axios from "axios";
 import { CiSearch } from "react-icons/ci";
+import Loading from "./Pop-up";
 
 const ExploreDebate = () => {
   const { activeDebates, addActiveDebate, removeActiveDebate } =
@@ -42,16 +43,11 @@ const ExploreDebate = () => {
 
   const DEFAULT_IMAGE = "/defult_debate.png";
 
-  if (loading) {
-    return (
-      <div className="flex justify-center mt-40 text-green-400 text-xl">
-        Loading debates...
-      </div>
-    );
-  }
+   
 
   return (
     <>
+    <Loading open={loading} text="Fetching debates..." />
       {/* 🔍 Search Box */}
     <div className="flex justify-center mt-20 mb-8 px-4">
   <div

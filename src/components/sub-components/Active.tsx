@@ -5,6 +5,7 @@ import { IoChatbubbles, IoCompass } from "react-icons/io5";
 import VoteBar from "./Votebar";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Loading from "./Pop-up";
 
 const Active = () => {
  
@@ -72,10 +73,13 @@ const Active = () => {
   }, [debates, user]);  
 
 const DEFAULT_IMAGE = "/defult_debate.png";
+
+ 
  
 
   return (
        <>
+       <Loading open={loading} text="Fetching debates..." />
       {activeDebates.length > 0 ? (
         <div className="flex flex-wrap gap-5 justify-center mt-10">
           {activeDebates.map((debate) => (

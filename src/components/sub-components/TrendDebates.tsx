@@ -5,6 +5,7 @@ import { DebateContext } from "../../DebatesContext";
 import VoteBar from "./Votebar";
 import axios from "axios";
 import { IoCompass } from "react-icons/io5";
+import Loading from "./Pop-up";
 
 const TrendDebate = () => {
   const { activeDebates, addActiveDebate, removeActiveDebate } =
@@ -38,16 +39,11 @@ const TrendDebate = () => {
     (a, b) => b.agree + b.disagree - (a.agree + a.disagree)
   );
 
-  if (loading) {
-    return (
-      <div className="flex justify-center mt-40 text-green-400 text-xl">
-        Loading debates...
-      </div>
-    );
-  }
+  
 
   return (
     <>
+    <Loading open={loading} text="Fetching debates..." />
       {rankedDebates.length > 0 ? (
         <div className="flex flex-wrap gap-6 justify-center mt-30">
           {rankedDebates.map((debate, index) => (

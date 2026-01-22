@@ -59,9 +59,11 @@ const sendToAI = async (debate : Debate) => {
 
 const DEFAULT_IMAGE = "/defult_debate.png";
  
+ 
 
 return (
   <div className="min-h-screen px-4 py-6">
+     <Loading open={loading} text="Fetching debates..." />
     {/* Debates Grid */}
     {debates.length > 0 ? (
       <div className="flex flex-wrap gap-6 justify-center">
