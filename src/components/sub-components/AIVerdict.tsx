@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import VoteBar from "./Votebar";
@@ -9,9 +10,13 @@ const AIVerdictPage = () => {
   const navigate = useNavigate();
   
 
-  const aiResult: string | undefined = location.state?.aiResult;
+ 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const debate: any | undefined = location.state?.debates;
-  const typedText : any = useTypingEffect(aiResult, 18);
+  const aiResult = location.state?.aiResult as string | undefined;
+const typedText = useTypingEffect(aiResult ?? "", 18);
+
+ 
 
 
   if (!aiResult) {

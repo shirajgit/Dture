@@ -7,6 +7,7 @@ import VoteBar from "./Votebar";
 import axios from "axios";
 import { IoCompass } from "react-icons/io5";
 import Loading from "./Pop-up";
+ 
 
 type ChildProps = {
    NoOfdebates : (msg: number) => void;
@@ -14,6 +15,7 @@ type ChildProps = {
 
 const MineDebate : FC<ChildProps> = ({NoOfdebates}) => {
 
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
    const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
@@ -32,7 +34,7 @@ const MineDebate : FC<ChildProps> = ({NoOfdebates}) => {
 
         setUser(res.data);
       } catch (err) {
-         
+         console.log(err)
       }
     };
 
@@ -48,8 +50,10 @@ const MineDebate : FC<ChildProps> = ({NoOfdebates}) => {
   } = useContext(DebateContext);
 
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [debates, setDebates] = useState<any[]>([]);
    const [loading, setLoading] = useState(true);
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
    const [filteredDebates, setFilteredDebates] = useState<any[]>([]);
 
 useEffect(() => {

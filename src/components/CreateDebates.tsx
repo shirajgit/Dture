@@ -15,6 +15,7 @@ interface Debate {
 
 const CreateDebates = () => {
   const [name, setName] = useState("");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [user, setUser] = useState<any>(null);
   const [description, setDescription] = useState("");
   const [duration, setDuration] = useState("24 Hours");

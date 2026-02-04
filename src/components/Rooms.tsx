@@ -54,7 +54,9 @@ const Rooms = () => {
   <div className="mt-10">
     {activeTab === "active" && <Active />}
     {activeTab === "ended" && <EndedDebates />}
-    {activeTab === "mine" && <MineDebate />}
+    {activeTab === "mine" && <MineDebate NoOfdebates={function (): void {
+          throw new Error("Function not implemented.");
+        } } />}
   </div>
 </div>
 
