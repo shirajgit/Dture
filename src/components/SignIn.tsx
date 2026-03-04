@@ -23,7 +23,7 @@ const SignIn = () => {
 
       localStorage.setItem("token", res.data.token);
       navigate("/home");
-    } catch (err: any) {
+    } catch (err:Error) {
       setError(err.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);
