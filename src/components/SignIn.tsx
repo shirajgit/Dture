@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const SignIn = () => {
@@ -23,7 +23,7 @@ const SignIn = () => {
 
       localStorage.setItem("token", res.data.token);
       navigate("/home");
-    } catch (err:Error) {
+    } catch (err : any) {
       setError(err.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);
