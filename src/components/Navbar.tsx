@@ -23,7 +23,7 @@ const Navbar = () => {
 
         {/* LOGO */}
         <Link to="/home" onClick={() => handleActive("/home")}>
-          <img src="/logo.png" alt="" className="w-20 h-15  rounded-5" />
+          <img src="/logo.png" alt="" className=" w-20 h-15  rounded-5" />
           
         </Link>
 

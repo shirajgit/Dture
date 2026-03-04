@@ -50,50 +50,79 @@ const EndedDebateView = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 text-white">
-      
-      {/* Title */}
-      <h1 className="text-3xl font-bold text-emerald-400">
-        {debate.name}
-      </h1>
+    <div className="max-w-4xl mx-auto mt-12 px-4 text-white">
 
-      {/* Vote Bar */}
-      <div className="mt-6">
-        <VoteBar
-          agreeVotes={debate.agree}
-          disagreeVotes={debate.disagree}
-        />
-      </div>
+  {/* Title Card */}
+  <div className="
+    bg-zinc-950/80 backdrop-blur
+    border border-emerald-400/20
+    rounded-3xl p-6
+    shadow-[0_0_35px_rgba(16,185,129,0.15)]
+  ">
+    
+    <h1 className="text-2xl sm:text-3xl font-bold text-emerald-400">
+      {debate.name}
+    </h1>
 
-      {/* AI Button */}
+    {/* Vote Bar */}
+    <div className="mt-6">
+      <VoteBar
+        agreeVotes={debate.agree}
+        disagreeVotes={debate.disagree}
+      />
+    </div>
+
+    {/* AI Button */}
+    <div className="mt-6 flex flex-wrap gap-4">
       <button
         onClick={generateAI}
         disabled={loading}
         className="
-          mt-6 px-6 py-3 rounded-xl font-semibold
+          flex items-center gap-2
+          px-6 py-3 rounded-xl font-semibold
           bg-gradient-to-r from-purple-600 to-indigo-600
           hover:from-purple-700 hover:to-indigo-700
-          disabled:opacity-50
+          transition-all duration-300
+          shadow-lg hover:shadow-purple-500/30
+          disabled:opacity-50 disabled:cursor-not-allowed
         "
       >
         {loading ? "Analyzing 🤖..." : "Generate AI Result 🤖"}
       </button>
-
-      {/* AI Verdict */}
-      {aiResult && (
-        <div className="
-          mt-8 bg-zinc-900 border border-purple-500
-          p-6 rounded-2xl shadow-lg
-        ">
-          <h2 className="text-xl text-purple-400 mb-3">
-            🤖 AI Verdict
-          </h2>
-          <pre className="whitespace-pre-wrap text-gray-300 text-sm">
-            {aiResult}
-          </pre>
-        </div>
-      )}
     </div>
+
+  </div>
+
+  {/* AI Verdict */}
+  {aiResult && (
+    <div
+      className="
+        mt-8
+        bg-gradient-to-br from-zinc-900 to-zinc-950
+        border border-purple-500/30
+        p-6 rounded-3xl
+        shadow-[0_0_35px_rgba(168,85,247,0.15)]
+      "
+    >
+      <h2 className="text-xl font-semibold text-purple-400 mb-4 flex items-center gap-2">
+        🤖 AI Verdict
+      </h2>
+
+      <div className="
+        bg-black/40
+        border border-white/10
+        rounded-xl p-4
+        text-gray-300 text-sm sm:text-base
+        leading-relaxed
+      ">
+        <pre className="whitespace-pre-wrap">
+          {aiResult}
+        </pre>
+      </div>
+    </div>
+  )}
+
+</div>
   );
 };
 

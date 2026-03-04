@@ -1,4 +1,4 @@
-import { CiSearch } from "react-icons/ci"
+ 
 import ExploreDebate from "./sub-components/ExploreDebates"
  
 

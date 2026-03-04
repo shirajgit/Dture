@@ -43,135 +43,186 @@ const TrendDebate = () => {
 
   return (
     <>
-    <Loading open={loading} text="Fetching debates..." />
-      {rankedDebates.length > 0 ? (
-        <div className="flex flex-wrap gap-6 justify-center mt-30">
-          {rankedDebates.map((debate, index) => (
+  <Loading open={loading} text="Fetching debates..." />
+
+  {rankedDebates.length > 0 ? (
+    <div className="px-4 pt-24 pb-14">
+      {/* ✅ Grid: 1 → 2 → 3 */}
+      <div
+        className="
+          mx-auto max-w-7xl
+          grid gap-6
+          grid-cols-1
+          sm:grid-cols-2
+          lg:grid-cols-3
+        "
+      >
+        {rankedDebates.map((debate, index) => (
+          <div
+            key={debate.id}
+            className="
+              group relative overflow-hidden
+              rounded-3xl
+              bg-zinc-950/80 text-white
+              border border-green-300/25
+              shadow-[0_0_25px_rgba(34,197,94,0.18)]
+              hover:shadow-[0_0_45px_rgba(34,197,94,0.35)]
+              transition-all duration-300
+              hover:-translate-y-1
+            "
+          >
+            {/* soft hover glow layer */}
             <div
-              key={debate.id}
-              className="relative bg-black text-white p-2 rounded-2xl border border-green-300
-                         shadow-[0_0_25px_4px_rgba(134,239,172,0.4)] 
-                         hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)]
-                         transition-all duration-300 transform hover:-translate-y-1"
-              style={{ width: "25rem", height: "35rem" }}
+              className="
+                pointer-events-none absolute inset-0
+                opacity-0 group-hover:opacity-100
+                transition-opacity duration-300
+                bg-gradient-to-b from-green-500/10 via-transparent to-emerald-500/10
+              "
+            />
+
+            {/* 🏆 Rank Badge */}
+            <div
+              className={`
+                absolute top-3 right-3 z-20
+                px-3 py-1 rounded-full text-xs font-extrabold text-white
+                border border-white/10 backdrop-blur
+                ${
+                  index === 0
+                    ? "bg-gradient-to-r from-yellow-400 to-orange-500 shadow-[0_0_25px_rgba(251,191,36,0.9)]"
+                    : index === 1
+                    ? "bg-gradient-to-r from-gray-300 to-gray-500 shadow-[0_0_25px_rgba(156,163,175,0.7)]"
+                    : index === 2
+                    ? "bg-gradient-to-r from-amber-700 to-yellow-800 shadow-[0_0_25px_rgba(180,83,9,0.7)]"
+                    : "bg-gradient-to-r from-green-400 to-emerald-600 shadow-[0_0_18px_rgba(34,197,94,0.6)]"
+                }
+              `}
             >
-              {/* 🏆 Rank Badge */}
-            <div
-  className={`
-    absolute top-3 right-3
-    px-3 py-1 rounded-full text-xs font-bold text-white
-    ${
-      index === 0
-        ? "bg-gradient-to-r from-yellow-400 to-orange-500 shadow-[0_0_25px_rgba(251,191,36,1)]"
-        : index === 1
-        ? "bg-gradient-to-r from-gray-300 to-gray-500 shadow-[0_0_25px_rgba(156,163,175,1)]"
-        : index === 2
-        ? "bg-gradient-to-r from-amber-700 to-yellow-800 shadow-[0_0_25px_rgba(180,83,9,1)]"
-        : "bg-gradient-to-r from-green-400 to-emerald-600 shadow-[0_0_18px_rgba(34,197,94,0.9)]"
-    }
-  `}
->
-  #{index + 1}
-</div>
+              #{index + 1}
+            </div>
 
+            {/* 🔥 Trending Badge */}
+            {index < 3 && (
+              <div
+                className="
+                  absolute top-3 left-3 z-20
+                  flex items-center gap-1
+                  px-3 py-1 rounded-full
+                  text-xs font-bold tracking-wide
+                  bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500
+                  text-black
+                  shadow-[0_0_18px_rgba(251,191,36,0.75)]
+                "
+              >
+                🔥 Trending
+              </div>
+            )}
 
-              {/* 🔥 Trending Badge */}
-              {index < 3 && (
-               <div
-  className="
-    absolute top-3 left-3
-    flex items-center gap-1
-    px-3 py-1
-    rounded-full
-    text-xs font-bold tracking-wide
-    bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500
-    text-black
-    shadow-[0_0_20px_rgba(251,191,36,0.9)]
-    animate-pulse
-  "
->
-  🔥 Trending
-</div>
+            {/* Image */}
+            <div className="relative">
+              <img
+                src={debate.image || DEFAULT_IMAGE}
+                alt={debate.name || ""}
+                loading="lazy"
+                className="
+                  w-full object-cover
+                  h-44 sm:h-48
+                  group-hover:scale-[1.02]
+                  transition-transform duration-300
+                "
+              />
+              <div className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-black/70 to-transparent" />
+            </div>
 
-              )}
+            {/* Content */}
+            <div className="p-4">
+              <h5 className="text-lg sm:text-xl font-bold text-green-200 line-clamp-1">
+                {debate.name}
+              </h5>
 
-              {/* Debate Image */}
-          
-                <img
-                  src={debate.image || DEFAULT_IMAGE}
-                  className="object-cover h-55 w-full rounded-t-2xl"
-                  alt={debate.name || ""}
-                />
-        
+              <p className="mt-2 text-sm sm:text-base text-gray-300/90 line-clamp-3">
+                {debate.description}
+              </p>
 
-              {/* Debate Info */}
-              <div className="p-2">
-                <h5 className="text-xl font-bold text-green-300 truncate">
-                  {debate.name}
-                </h5>
-                <p className="text-gray-400 mt-2 h-17 overflow-hidden">
-                  {debate.description}
-                </p>
+              {/* Meta */}
+              <div className="mt-4 rounded-2xl border border-green-300/20 bg-black/40 p-3">
+                <div className="flex items-center justify-between gap-3 text-xs sm:text-sm text-gray-300">
+                  <p className="whitespace-nowrap">⏳ {debate.duration}</p>
+                  <p className="truncate">
+                    by{" "}
+                    <span className="text-green-300 font-semibold">
+                      {debate.user || "Shiraj Mujawar"}
+                    </span>
+                  </p>
+                </div>
+
+                <div className="mt-3">
+                  <VoteBar agreeVotes={debate.agree} disagreeVotes={debate.disagree} />
+                </div>
               </div>
 
-              {/* Creator + Duration */}
-              <div className="border-t border-green-300 p-2 text-sm">
-                <p>⏳ Duration: {debate.duration}</p>
-                <p className="font-semibold mt-1">
-                  Created by:{" "}
-                  <span className="text-green-400">
-                    {debate.user || "Shiraj Mujawar"}
-                  </span>
-                </p>
-              </div>
-
-              {/* Vote Bar */}
-              <div className="px-3">
-                <VoteBar
-                  agreeVotes={debate.agree}
-                  disagreeVotes={debate.disagree}
-                />
-              </div>
-
-              {/* Buttons */}
-              <div className="flex justify-between items-center px-4 pb-4 mt-2">
+              {/* Actions */}
+              <div className="mt-4 flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={() =>
                     isActive(debate.id)
                       ? removeActiveDebate(debate.id)
                       : addActiveDebate(debate)
                   }
-                  className={`flex items-center gap-2 px-3 py-1 rounded-md text-white font-medium
+                  className={`
+                    w-full inline-flex items-center justify-center gap-2
+                    rounded-2xl px-4 py-3
+                    text-sm font-semibold text-white
+                    border border-green-400/25
+                    transition-all duration-300
+                    active:scale-[0.99]
                     ${
                       isActive(debate.id)
-                        ? "bg-green-700"
+                        ? "bg-green-700 hover:bg-green-600"
                         : "bg-green-600 hover:bg-green-500"
                     }
-                    transition-all duration-300`}
+                  `}
                 >
                   <IoIosPeople />
-                  Joins ({debate.agree + debate.disagree})
+                  {isActive(debate.id) ? "Joined" : "Join"} (
+                  {debate.agree + debate.disagree})
                 </button>
 
-                <Link to={`/entercreate/${debate.id}`}>
-                  <button className="bg-green-600 hover:bg-green-500 text-white text-sm font-semibold px-4 py-2 rounded-md transition-all duration-300">
-                    Enter Debate
+                <Link to={`/entercreate/${debate.id}`} className="w-full">
+                  <button
+                    className="
+                      w-full rounded-2xl px-4 py-3
+                      text-sm font-semibold
+                      bg-white/10 hover:bg-white/15
+                      text-white
+                      border border-white/10 hover:border-white/20
+                      transition-all duration-300
+                      active:scale-[0.99]
+                    "
+                  >
+                    Enter Debate →
                   </button>
                 </Link>
               </div>
             </div>
-          ))}
-        </div>
-      ) : (
-        <div className="flex flex-col items-center justify-center mt-40 text-center">
-          <IoCompass size={100} className="text-green-500 mb-4" />
-          <h1 className="text-2xl font-semibold">Explore Debates</h1>
-          <p className="text-gray-400 mt-2">
-            Discover trending debates and join the conversation!
-          </p>
-        </div>
-      )}
-    </>
+          </div>
+        ))}
+      </div>
+    </div>
+  ) : (
+    <div className="flex flex-col items-center justify-center mt-32 px-4 text-center">
+      <div className="grid place-items-center h-20 w-20 rounded-3xl bg-green-500/10 border border-green-400/20">
+        <IoCompass size={38} className="text-green-400" />
+      </div>
+      <h1 className="mt-6 text-xl sm:text-2xl font-semibold text-white">
+        Explore Debates
+      </h1>
+      <p className="mt-2 text-sm sm:text-base text-gray-400 max-w-md">
+        Discover trending debates and join the conversation!
+      </p>
+    </div>
+  )}
+</>
   );
 };
 
