@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { IoCompass, IoNotificationsSharp } from 'react-icons/io5'
 import { GiBackwardTime } from "react-icons/gi";
 import axios from 'axios';
-import { Link, Route, Routes } from 'react-router-dom';
+ 
 import { IoIosPeople } from 'react-icons/io';
 import VoteBar from './Votebar';
 import { Debate } from '@/DebatesContext';
-import AIVerdictPage from './AIVerdict';
+ 
 import { useNavigate } from "react-router-dom";
 import Loading from './Pop-up';
 
@@ -18,7 +17,6 @@ const EndedDebates = () => {
   const [debates, setDebates] = useState<any[]>([]);
   
   const [loading, setLoading] = useState(false);
-  const [hashow ,sethashow ] = useState(false)
  const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,9 +29,7 @@ const EndedDebates = () => {
       
     } catch (err) {
       console.error(err);
-    } finally {
-    
-    }
+    } 
   };
 
   fetchDebates();
@@ -49,7 +45,7 @@ const sendToAI = async (debate : Debate) => {
       state: { aiResult: res.data.result , debates:debate },
     });
  
-  } catch (err: any) {
+  } catch (err:Error | any) {
   console.error(err.response?.data);
   alert(err.response?.data?.message || "AI failed");
 } finally {
@@ -157,7 +153,7 @@ return (
                   </div>
 
                   {/* Vote bar */}
-                  <div className="mt-5">
+                  <div className="mt-1">
                     <VoteBar agreeVotes={debate.agree} disagreeVotes={debate.disagree} />
                   </div>
                 </div>

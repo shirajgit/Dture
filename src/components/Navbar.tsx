@@ -121,7 +121,7 @@ const Navbar = () => {
       
       {/* Links */}
       {[
-        { to: "/", label: "Home" },
+        { to: "/home", label: "Home" },
         { to: "/feed", label: "Feed" },
         { to: "/trend", label: "Trend" },
         { to: "/explore", label: "Explore" },
