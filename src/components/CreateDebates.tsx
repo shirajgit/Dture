@@ -106,79 +106,170 @@ const CreateDebates = () => {
   };
 
   return (
-    <>
-      <div className="min-h-screen bg-gradient-to-br from-black via-zinc-900 to-black flex justify-center px-4 py-19">
-        <div className="w-full max-w-3xl gap-10 text-center space-y-8">
-          <div className="text-xl">
-            <input
-              className="w-full bg-zinc-900 p-3 rounded-xl border border-zinc-700 text-white text-lg focus:outline-none focus:ring-2 focus:ring-green-500 mb-20"
-              placeholder="Debate Topic?"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+<>
+  <div className="min-h-screen bg-gradient-to-br from-black via-zinc-950 to-black px-4 py-20 flex justify-center">
+    <div className="w-full max-w-4xl">
+      {/* Glow */}
+      <div className="pointer-events-none absolute left-1/2 -translate-x-1/2 -top-32 h-[520px] w-[520px] rounded-full bg-emerald-500/10 blur-3xl" />
+
+      {/* Card */}
+      <div className="relative rounded-3xl p-[1px] bg-gradient-to-r from-emerald-500/30 via-purple-500/20 to-indigo-500/20">
+        <div className="rounded-3xl bg-zinc-950/75 backdrop-blur-xl border border-white/10 shadow-2xl p-6 sm:p-10">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <p className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold
+                          bg-emerald-500/10 text-emerald-200 border border-emerald-500/25">
+              ✨ Create a new debate
+            </p>
+
+            <h1 className="mt-4 text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+              Start a Debate on <span className="text-emerald-300">Dtrue</span>
+            </h1>
+
+            <p className="mt-2 text-gray-400 text-sm sm:text-base">
+              Keep it clear, respectful, and interesting — your debate will go live instantly.
+            </p>
           </div>
 
-          <div className="mt-10 text-xl">
-            <textarea
-              className="w-full bg-zinc-900 p-2 rounded-xl border border-zinc-700 text-white text-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              rows={12}
-              placeholder="Description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* LEFT: Title + Description */}
+            <div className="space-y-5">
+              {/* Topic */}
+              <div>
+                <label className="text-sm font-semibold text-gray-200">Debate topic</label>
+                <p className="text-xs text-gray-500 mt-1">Example: “Is AI good for jobs?”</p>
 
-          <div className="w-full max-w-xl mx-auto space-y-2">
-            <div className="relative">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="w-full rounded-xl border border-green-500 bg-gradient-to-r from-zinc-900/80 to-zinc-800/80
-                 p-3 text-gray-300 cursor-pointer shadow-md hover:shadow-green-400/50 transition-shadow
-                 focus:outline-none focus:ring-2 focus:ring-green-400"
-              />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-green-400 text-lg pointer-events-none">
-                📎
-              </span>
+                <input
+                  className="mt-3 w-full bg-white/5 px-4 py-3 rounded-2xl
+                             border border-white/10 text-white text-base
+                             placeholder:text-gray-500
+                             focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500/30
+                             transition"
+                  placeholder="Debate Topic?"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  maxLength={80}
+                />
+
+                <div className="mt-2 text-right text-xs text-gray-500">
+                  {name?.length || 0}/80
+                </div>
+              </div>
+
+              {/* Description */}
+              <div>
+                <label className="text-sm font-semibold text-gray-200">Description</label>
+                <p className="text-xs text-gray-500 mt-1">
+                  Add context + what people should vote on.
+                </p>
+
+                <textarea
+                  className="mt-3 w-full bg-white/5 px-4 py-3 rounded-2xl
+                             border border-white/10 text-white text-base
+                             placeholder:text-gray-500
+                             focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500/30
+                             transition"
+                  rows={10}
+                  placeholder="Description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  maxLength={600}
+                />
+
+                <div className="mt-2 text-right text-xs text-gray-500">
+                  {description?.length || 0}/600
+                </div>
+              </div>
             </div>
 
-            {imageFile && (
-              <p className="text-sm text-gray-400 mt-1 truncate font-medium">{imageFile.name}</p>
-            )}
-          </div>
+            {/* RIGHT: Image + Duration + Button */}
+            <div className="space-y-6">
+              {/* Upload */}
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-semibold text-gray-200">Cover image</p>
+                    <p className="text-xs text-gray-500 mt-1">Optional — helps your debate stand out.</p>
+                  </div>
+                  <span className="text-emerald-300 text-xl">📎</span>
+                </div>
 
-          <div className="flex justify-center">
-            <div className="flex gap-4 bg-zinc-900 p-3 rounded-2xl border border-zinc-700">
-              {["24 Hours", "3 Days", "7 Days"].map((d) => (
-                <button
-                  key={d}
-                  onClick={() => setDuration(d)}
-                  className={`px-6 py-2 rounded-xl font-semibold transition-all duration-300
-                    ${duration === d ? "bg-green-500 text-black" : "text-gray-300 hover:bg-zinc-800"}`}
-                >
-                  {d}
-                </button>
-              ))}
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="mt-4 w-full rounded-2xl border border-emerald-500/30 bg-black/30
+                             p-3 text-gray-300 cursor-pointer
+                             shadow hover:shadow-[0_0_25px_rgba(34,197,94,0.15)]
+                             focus:outline-none focus:ring-2 focus:ring-emerald-500/40 transition"
+                />
+
+                {imageFile && (
+                  <div className="mt-4">
+                    <p className="text-xs text-gray-400 truncate font-medium">
+                      Selected: <span className="text-gray-200">{imageFile.name}</span>
+                    </p>
+
+                    {/* Optional preview if you store previewUrl in state */}
+                    {/* <img src={previewUrl} className="mt-3 w-full h-44 object-cover rounded-2xl border border-white/10" /> */}
+                  </div>
+                )}
+              </div>
+
+              {/* Duration */}
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
+                <p className="text-sm font-semibold text-gray-200">Duration</p>
+                <p className="text-xs text-gray-500 mt-1">Choose how long this debate stays active.</p>
+
+                <div className="mt-4 grid grid-cols-3 gap-3">
+                  {["24 Hours", "3 Days", "7 Days"].map((d) => {
+                    const isActive = duration === d;
+                    return (
+                      <button
+                        key={d}
+                        onClick={() => setDuration(d)}
+                        className={`py-3 rounded-2xl font-semibold text-sm transition-all duration-200
+                          border active:scale-[0.98]
+                          ${
+                            isActive
+                              ? "bg-gradient-to-r from-emerald-400 to-green-400 text-black border-white/10 shadow-[0_0_25px_rgba(34,197,94,0.18)]"
+                              : "bg-black/30 text-gray-200 border-white/10 hover:bg-white/10"
+                          }`}
+                      >
+                        {d}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Submit */}
+              <button
+                onClick={handleAddDebate}
+                disabled={loading}
+                className={`w-full py-4 rounded-2xl font-extrabold text-base
+                  bg-gradient-to-r from-emerald-400 to-green-400 text-black
+                  border border-white/10
+                  shadow-[0_0_35px_rgba(34,197,94,0.18)]
+                  hover:shadow-[0_0_50px_rgba(34,197,94,0.25)]
+                  transition-all duration-200 active:scale-[0.98]
+                  ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+              >
+                {loading ? "Creating..." : "Create Debate"}
+              </button>
+
+              <p className="text-xs text-gray-500 text-center">
+                By creating a debate you agree to keep it respectful and non-harmful.
+              </p>
             </div>
-          </div>
-
-          <div className="text-2xl">
-            <button
-              onClick={handleAddDebate}
-              disabled={loading}
-              className={`px-8 py-3 font-bold rounded-5
-              bg-gradient-to-r from-green-400 to-emerald-500 text-black
-              transition-all duration-300 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
-            >
-              Create Debate
-            </button>
           </div>
 
           <Loading open={loading} text="Creating debate..." />
         </div>
       </div>
-    </>
+    </div>
+  </div>
+</>
   );
 };
 

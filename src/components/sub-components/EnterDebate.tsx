@@ -183,235 +183,249 @@ const EnterDebate = () => {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white pt-24 pb-28 px-6">
-      {/* Header */}
-      <div className="flex items-center gap-4 bg-gradient-to-r from-green-600 to-emerald-500 p-2 rounded-2xl shadow-lg">
-        <img
-          src={debate.image}
-          alt={debate.name}
-          className="w-24 h-24 rounded-2xl object-cover"
-        />
-        <div>
-          <h1 className="text-3xl font-bold">{debate.name}</h1>
-          <p className="text-sm text-green-100">
-            Vote and see what others think
+ <div className="min-h-screen bg-gradient-to-br from-black via-zinc-950 to-black text-white pt-24 pb-28 px-4 sm:px-6">
+  {/* Header */}
+  <div className="mx-auto max-w-7xl">
+    <div className="sticky top-16 z-40">
+      <div className="relative rounded-3xl p-[1px] bg-gradient-to-r from-emerald-400/60 via-purple-500/50 to-indigo-500/50 shadow-[0_0_50px_rgba(34,197,94,0.15)]">
+        <div className="rounded-3xl bg-zinc-950/70 backdrop-blur-xl border border-white/10 p-4 sm:p-5">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="relative w-full sm:w-auto">
+              <img
+                src={debate.image}
+                alt={debate.name}
+                className="w-full sm:w-28 h-32 sm:h-28 rounded-2xl object-cover border border-white/10"
+              />
+              <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+            </div>
+
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-200 border border-emerald-500/25">
+                  Live Debate
+                </span>
+                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/10 text-purple-200 border border-purple-500/25">
+                  Vote • Comment • Results
+                </span>
+              </div>
+
+              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight truncate">
+                {debate.name}
+              </h1>
+              <p className="text-sm text-gray-300 mt-1">
+                Vote and see what others think. Keep it respectful 👊
+              </p>
+            </div>
+
+            {/* Quick stats */}
+            <div className="flex gap-3 sm:gap-4">
+              <div className="px-4 py-2 rounded-2xl bg-white/5 border border-white/10 text-center">
+                <p className="text-xs text-gray-400">👍 Agree</p>
+                <p className="text-lg font-bold text-emerald-300">{agreeVotes}</p>
+              </div>
+              <div className="px-4 py-2 rounded-2xl bg-white/5 border border-white/10 text-center">
+                <p className="text-xs text-gray-400">👎 Disagree</p>
+                <p className="text-lg font-bold text-rose-300">{disagreeVotes}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Subtle glow blobs */}
+          <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-emerald-400/10 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-purple-500/10 blur-3xl" />
+        </div>
+      </div>
+    </div>
+
+    {/* Body */}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+      {/* Description + Votes */}
+      <div className="relative rounded-3xl p-[1px] bg-gradient-to-b from-white/10 to-white/0">
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-5 sm:p-6 shadow-lg">
+          <h3 className="text-lg sm:text-xl font-semibold text-emerald-300 mb-3">
+            Description
+          </h3>
+
+          <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
+            {debate.description}
           </p>
+
+          <div className="mt-6 space-y-3">
+            {/* Agree */}
+            <button
+              onClick={handleAgree}
+              disabled={hasVoted}
+              className={`w-full py-3 rounded-2xl font-semibold flex items-center justify-center gap-3
+                transition-all duration-200 active:scale-[0.98] border border-white/10
+                ${
+                  hasVoted
+                    ? "bg-zinc-700/40 cursor-not-allowed text-white/80"
+                    : "bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 shadow-[0_0_25px_rgba(34,197,94,0.20)]"
+                }`}
+            >
+              <span className="text-xl">👍</span>
+              <span className="text-xl">Agree</span>
+              <span className="ml-auto bg-white/15 px-3 py-1 rounded-full text-sm">
+                {agreeVotes}
+              </span>
+            </button>
+
+            {/* Disagree */}
+            <button
+              onClick={handleDisagree}
+              disabled={hasVoted}
+              className={`w-full py-3 rounded-2xl font-semibold flex items-center justify-center gap-3
+                transition-all duration-200 active:scale-[0.98] border border-white/10
+                ${
+                  hasVoted
+                    ? "bg-zinc-700/40 cursor-not-allowed text-white/80"
+                    : "bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 shadow-[0_0_25px_rgba(244,63,94,0.18)]"
+                }`}
+            >
+              <span className="text-xl">👎</span>
+              <span className="text-xl">Disagree</span>
+              <span className="ml-auto bg-white/15 px-3 py-1 rounded-full text-sm">
+                {disagreeVotes}
+              </span>
+            </button>
+
+            {/* Vote Status */}
+            {hasVoted && (
+              <div className="mt-2 text-center text-yellow-300 font-semibold text-sm bg-yellow-500/10 border border-yellow-500/20 rounded-2xl py-2">
+                ✔ You have successfully voted
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-        {/* Description + Votes */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-5 sm:p-6 shadow-lg">
-  
-  {/* Title */}
-  <h3 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-3">
-    Description
-  </h3>
+      {/* Live Results */}
+      <div className="md:col-span-2 relative rounded-3xl p-[1px] bg-gradient-to-b from-white/10 to-white/0">
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-5 sm:p-6 flex flex-col shadow-lg">
+          <div className="flex items-center justify-between mb-5">
+            <h3 className="text-xl sm:text-2xl font-semibold text-emerald-300">
+              Live Results
+            </h3>
 
-  {/* Description */}
-  <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-    {debate.description}
-  </p>
+            <div className="flex gap-4 text-sm sm:text-base">
+              <p className="text-gray-300">
+                👍{" "}
+                <span className="text-emerald-300 font-semibold">{agreeVotes}</span>
+              </p>
+              <p className="text-gray-300">
+                👎{" "}
+                <span className="text-rose-300 font-semibold">{disagreeVotes}</span>
+              </p>
+            </div>
+          </div>
 
-  {/* Buttons */}
-  <div className="mt-5 space-y-3">
-    
-    {/* Agree */}
-    <button
-      onClick={handleAgree}
-      disabled={hasVoted}
-      className={`
-        w-full py-3 rounded-xl font-semibold
-        flex items-center justify-center gap-2
-        transition-all duration-200 mb-3 text-2xl
-        ${
-          hasVoted
-            ? "bg-gray-600 cursor-not-allowed"
-            : "bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 active:scale-95"
-        }
-      `}
-    >
-      👍 Agree
-      <span className="bg-white/20 px-2 py-0.5 rounded-full text-lg">
-        {agreeVotes}
-      </span>
-    </button>
+          {/* Messages Container */}
+          <div className="flex flex-col sm:flex-row gap-6 overflow-y-auto max-h-[420px] pr-2
+                          scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+            {/* Agree Column */}
+            <div className="flex-1 space-y-3">
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-semibold text-emerald-300">Agree</h4>
+                <span className="text-xs text-gray-500">{debate.agreeCom?.length || 0} msgs</span>
+              </div>
 
-    {/* Disagree */}
-    <button
-      onClick={handleDisagree}
-      disabled={hasVoted}
-      className={`
-        w-full py-3 rounded-xl font-semibold
-        flex items-center justify-center gap-2
-        transition-all duration-200
-        ${
-          hasVoted
-            ? "bg-gray-600 cursor-not-allowed"
-            : "bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 active:scale-95"
-        }
-      `}
-    >
-      👎 Disagree
-      <span className="bg-white/20 px-2 py-0.5 rounded-full text-sm">
-        {disagreeVotes}
-      </span>
-    </button>
+              {(debate.agreeCom?.length || 0) === 0 && (
+                <p className="text-xs text-gray-500">No agree comments yet</p>
+              )}
 
+              {debate.agreeCom?.map(
+                (c: { user: string; commets: string }, index: number) => (
+                  <div key={index} className="flex justify-start">
+                    <div className="max-w-[88%] bg-gradient-to-br from-emerald-900/70 to-green-800/60
+                                    border border-emerald-500/20 text-white px-4 py-3
+                                    rounded-2xl rounded-bl-md shadow-[0_0_18px_rgba(34,197,94,0.12)]">
+                      <p className="text-xs text-emerald-200 font-semibold mb-1 truncate">
+                        @{c.user}
+                      </p>
+                      <p className="text-sm text-white/90 leading-relaxed">{c.commets}</p>
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+
+            {/* Disagree Column */}
+            <div className="flex-1 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-gray-500">{debate.disagreeCom?.length || 0} msgs</span>
+                <h4 className="text-sm font-semibold text-rose-300 text-right">
+                  Disagree
+                </h4>
+              </div>
+
+              {(debate.disagreeCom?.length || 0) === 0 && (
+                <p className="text-xs text-gray-500 text-right">
+                  No disagree comments yet
+                </p>
+              )}
+
+              {debate.disagreeCom?.map(
+                (c: { user: string; commets: string }, index: number) => (
+                  <div key={index} className="flex justify-end">
+                    <div className="max-w-[88%] bg-gradient-to-br from-rose-900/70 to-red-900/60
+                                    border border-rose-500/20 text-white px-4 py-3
+                                    rounded-2xl rounded-br-md shadow-[0_0_18px_rgba(244,63,94,0.10)]">
+                      <p className="text-xs text-rose-200 font-semibold mb-1 text-right truncate">
+                        @{c.user}
+                      </p>
+                      <p className="text-sm text-white/90 leading-relaxed text-right">
+                        {c.commets}
+                      </p>
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Comments input */}
+    {!hasCommets && (
+      <div className="mt-8 flex flex-col items-center gap-4 px-2">
+        <div className="w-full max-w-3xl relative rounded-3xl p-[1px] bg-gradient-to-r from-emerald-500/30 via-purple-500/25 to-rose-500/25">
+          <div className="rounded-3xl bg-zinc-950/70 backdrop-blur-xl border border-white/10 p-4 sm:p-5">
+            <div className="flex flex-col sm:flex-row gap-3">
+              <input
+                ref={inputRef}
+                type="text"
+                placeholder="Write your comment..."
+                onChange={(e) => setCommets(e.target.value)}
+                className="flex-1 bg-black/40 text-gray-100 px-4 py-3 rounded-2xl outline-none
+                           border border-white/10 shadow-inner placeholder-gray-500
+                           focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500/40 transition"
+              />
+
+              <button
+                onClick={handleCommmets}
+                disabled={hasCommets}
+                className={`px-6 py-3 rounded-2xl font-semibold text-white transition-all duration-200
+                  active:scale-[0.98] border border-white/10
+                  ${
+                    disagrred
+                      ? "bg-gradient-to-br from-zinc-900 via-rose-900 to-red-700 hover:from-zinc-800 hover:via-rose-800 hover:to-red-600 shadow-[0_0_25px_rgba(244,63,94,0.18)]"
+                      : "bg-gradient-to-br from-zinc-900 via-emerald-900 to-green-700 hover:from-zinc-800 hover:via-emerald-800 hover:to-green-600 shadow-[0_0_25px_rgba(34,197,94,0.16)]"
+                  }`}
+              >
+                Submit Comment
+              </button>
+            </div>
+
+            <p className="text-xs text-gray-400 mt-3">
+              Tip: short, clear comments get more upvotes 🔥
+            </p>
+          </div>
+        </div>
+      </div>
+    )}
   </div>
 </div>
-
-
-        {/* Stats */}
-        <div className="md:col-span-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-5 sm:p-6 flex flex-col">
-  {/* Header */}
-  <div className="flex items-center justify-between mb-5">
-    <h3 className="text-xl sm:text-2xl font-semibold text-emerald-400">
-      Live Results
-    </h3>
-
-    <div className="flex gap-4 text-2xl sm:text-base">
-      <p className="text-gray-300">
-        👍 <span className="text-emerald-400 font-semibold">{agreeVotes}</span>
-      </p>
-      <p className="text-gray-300">
-        👎 <span className="text-rose-400 font-semibold">{disagreeVotes}</span>
-      </p>
-    </div>
-  </div>
-
-  {/* Messages Container */}
-  <div className="flex flex-col sm:flex-row gap-6 overflow-y-auto max-h-[380px] pr-1 scrollbar-thin scrollbar-thumb-white/10">
-
-    {/* Agree Column */}
-    <div className="flex-1 space-y-3">
-      <h4 className="text-sm font-semibold text-emerald-400">Agree</h4>
-
-      {debate.agreeCom.length === 0 && (
-        <p className="text-xs text-gray-500">No agree comments yet</p>
-      )}
-
-    {debate.agreeCom.map(
-  (c: { user: string; commets: string }, index: number) => (
-    <div key={index} className="flex justify-start">
-      <div className="
-        max-w-[85%]
-        bg-gradient-to-br from-emerald-900 to-green-800
-        text-white px-4 py-3
-        rounded-2xl rounded-bl-md
-        shadow-md
-        text-sm
-      ">
-        <p className="text-xs text-emerald-400 font-semibold mb-1">
-          @{c.user}
-        </p>
-        <p >{c.commets}</p>
-      </div>
-    </div>
-  )
-)}
-
-    </div>
-
-    {/* Disagree Column */}
-    <div className="flex-1 space-y-3">
-      <h4 className="text-sm font-semibold text-rose-400 text-right">Disagree</h4>
-
-      {debate.disagreeCom.length === 0 && (
-        <p className="text-xs text-gray-500 text-right">
-          No disagree comments yet
-        </p>
-      )}
-
-     {debate.disagreeCom.map(
-  (c: { user: string; commets: string }, index: number) => (
-    <div key={index} className="flex justify-end">
-      <div className="
-        max-w-[85%]
-        bg-gradient-to-br from-rose-900 to-red-900
-        text-white px-4 py-1
-        rounded-2xl rounded-br-md
-        shadow-md
-        text-lg
-      ">
-        <p className="text-lg text-rose-200 font-semibold mb-1 text-right">
-          @{c.user}
-        </p>
-        <p>{c.commets}</p>
-      </div>
-    </div>
-  )
-)}
-
-    </div>
-  </div>
-
-  {/* Vote Status */}
-  {hasVoted && (
-    <p className="mt-4 text-center text-yellow-400 font-semibold text-sm">
-      ✔ You have successfully voted
-    </p>
-  )}
-</div>
-
-
-      </div>
-
-      {/* Commets */}
-{!hasCommets && (
-  <div className="mt-8 flex flex-col items-center gap-4 px-4">
-    
-    {/* Input */}
-    <input
-      ref={inputRef}
-      type="text"
-      placeholder="Write your comment..."
-      onChange={(e) => setCommets(e.target.value)}
-      className="
-        w-full max-w-lg
-        bg-gray-900 text-gray-100
-        px-4 py-3
-        rounded-xl
-        outline-none
-        border border-white/10
-        shadow-inner
-        placeholder-gray-500
-        focus:ring-2 focus:ring-emerald-900
-        focus:border-emerald-800
-        transition
-      "
-    />
-
-    {/* Button */}
-    <button
-      onClick={handleCommmets}
-      disabled={hasCommets}
-      className={`
-        w-full max-w-xs
-        py-3
-        rounded-xl
-        font-semibold
-        text-white
-        transition-all duration-200
-        ${
-           disagrred
-            ? "bg-gradient-to-br from-gray-900 via-rose-900 to-red-800 hover:from-gray-800 hover:via-rose-800 hover:to-red-700 active:scale-95 shadow-lg"
-            : `
-              bg-gradient-to-br from-gray-900 via-emerald-900 to-green-800
-              hover:from-gray-800 hover:via-emerald-800 hover:to-green-700
-              active:scale-95
-              shadow-lg
-            `
-        }
-      `}
-    >
-      Submit Comment
-    </button>
-  </div>
-)}
- 
-
-    </div>
   );
 };
 
